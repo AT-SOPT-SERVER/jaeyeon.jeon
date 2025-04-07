@@ -19,19 +19,7 @@ public class PostService {
 
         LocalDateTime now = LocalDateTime.now();
 
-        if (postServiceValidator.createdAtValidate()) {
-            return;
-        }
-
-       if (postServiceValidator.titleNotBlankValidate(title)){
-           return;
-        }
-       if (postServiceValidator.titleLengthValidate(title)){
-            return;
-        }
-       if (postServiceValidator.titleDuplicate(title)){
-          return;
-       }
+        if (createValidate(title)) return;
 
         Post newPost = new Post(idGenerator.idGenerate(), title, now);
         postRepository.save(newPost);
@@ -76,5 +64,26 @@ public class PostService {
         }
 
         return result;
+    }
+
+
+
+
+
+
+    private boolean createValidate(String title) {
+        if (postServiceValidator.createdAtValidate()) {
+            return true;
+        }
+        if (postServiceValidator.titleNotBlankValidate(title)){
+            return true;
+        }
+        if (postServiceValidator.titleLengthValidate(title)){
+            return true;
+        }
+        if (postServiceValidator.titleDuplicate(title)){
+            return true;
+        }
+        return false;
     }
 }

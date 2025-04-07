@@ -36,8 +36,12 @@ public class PostServiceValidator {
     }
 
     public boolean titleDuplicate(String title) {
-        System.err.println("제목이 중복되었습니다");
-        return postRepository.isValidate(title);
+
+        if (postRepository.isValidate(title)){
+            System.err.println("제목이 중복되었습니다");
+            return true;
+        }
+        return false;
     }
 
     public boolean createdAtValidate() {
