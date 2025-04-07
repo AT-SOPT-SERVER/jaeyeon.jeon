@@ -38,4 +38,8 @@ public class PostRepository {
         }
     }
 
+    public void update(Post post, String updatedTitle) {
+        post.update(updatedTitle);
+    }
+
 }
