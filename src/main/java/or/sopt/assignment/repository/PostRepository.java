@@ -19,12 +19,10 @@ public class PostRepository {
 
     public Post findById(int id) {
 
-        Post findPost = postList.stream()
+        return postList.stream()
                 .filter(post -> post.getId() == id)
                 .findFirst()
                 .orElseThrow(()-> new IllegalArgumentException("게시글을 못찾겠습니다"));
-
-        return findPost;
     }
 
     public void deleteById(int id) {
