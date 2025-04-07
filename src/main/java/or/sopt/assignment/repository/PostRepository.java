@@ -23,20 +23,7 @@ public class PostRepository {
         return postList.stream()
                 .filter(post -> post.getId() == id)
                 .findFirst()
-                .orElseGet(() -> {
-                    System.err.println("데이터를 찾을 수 없습니다");
-                    return null;
-                });
-    }
-
-    public Post findByTitle(String title) {
-        return postList.stream()
-                .filter(post -> Objects.equals(post.getTitle(), title))
-                .findFirst()
-                .orElseGet(() -> {
-                    System.err.println("데이터를 찾을 수 없습니다");
-                    return null;
-                });
+                .orElse(null);
     }
 
     public boolean isValidate(String title) {

@@ -33,7 +33,13 @@ public class PostService {
     }
 
     public Post getPostById(int id){
-        return postRepository.findById(id);
+        Post result = postRepository.findById(id);
+
+        if(result == null){
+            System.err.println("해당하는 게시글이 존재하지 않습니다");
+        }
+
+        return result;
     }
 
     public boolean deletePostById(int id){
@@ -53,6 +59,12 @@ public class PostService {
     }
 
     public List<Post> searchPostsByKeyword(String keyword) {
-        return postRepository.searchPostsByKeyword(keyword);
+        List<Post> result = postRepository.searchPostsByKeyword(keyword);
+
+        if (result.isEmpty()){
+            System.err.println("키워드를 포함한 게시글이 존재하지 않습니다");
+        }
+
+        return result;
     }
 }
