@@ -5,27 +5,38 @@ import or.sopt.assignment.repository.PostRepository;
 import or.sopt.assignment.util.IdGenerator;
 import or.sopt.assignment.validator.PostServiceValidator;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class PostService {
 
     private final PostRepository postRepository = new PostRepository();
     private final IdGenerator idGenerator = new IdGenerator();
-    private final PostServiceValidator postServiceValidator = new PostServiceValidator();
+    private final PostServiceValidator postServiceValidator = new PostServiceValidator(postRepository);
 
     public void createPost(String title){
 
-       postServiceValidator.titleNotBlankValidate(title);
-       postServiceValidator.titleLengthValidate(title);
+        LocalDateTime now = LocalDateTime.now();
 
-       // 해당 로직을 Validate로 빼면 의존관계가 이상해짐: 과연 의존관계냐 일관성이냐
-        if(postRepository.isValidate(title)){
-            System.err.println("게시글의 제목이 중복되었습니다");
+        if (postServiceValidator.createdAtValidate()) {
             return;
         }
 
-        Post newPost = new Post(idGenerator.idGenerate(), title);
+       if (postServiceValidator.titleNotBlankValidate(title)){
+           return;
+        }
+       if (postServiceValidator.titleLengthValidate(title)){
+            return;
+        }
+       if (postServiceValidator.titleDuplicate(title)){
+          return;
+       }
+
+        Post newPost = new Post(idGenerator.idGenerate(), title, now);
         postRepository.save(newPost);
+
+        System.out.println("✅ 게시글이 성공적으로 저장되었습니다!");
     }
 
     public List<Post> getAllPosts(){
@@ -38,7 +49,6 @@ public class PostService {
         if(result == null){
             System.err.println("해당하는 게시글이 존재하지 않습니다");
         }
-
         return result;
     }
 

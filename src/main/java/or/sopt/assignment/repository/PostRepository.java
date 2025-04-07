@@ -2,6 +2,7 @@ package or.sopt.assignment.repository;
 
 import or.sopt.assignment.domain.Post;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -58,5 +59,10 @@ public class PostRepository {
         return postList.stream()
                 .filter(post -> post.getTitle() != null && post.getTitle().contains(keyword))
                 .toList();
+    }
+
+    public LocalDateTime getLastLocalDatetime(){
+        if (postList.isEmpty()) return null;
+        return postList.get(postList.size() - 1).getCreatedAt();
     }
 }
