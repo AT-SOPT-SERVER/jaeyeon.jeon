@@ -4,6 +4,7 @@ import or.sopt.assignment.domain.Post;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PostRepository {
 
@@ -26,6 +27,25 @@ public class PostRepository {
                     System.err.println("데이터를 찾을 수 없습니다");
                     return null;
                 });
+    }
+
+    public Post findByTitle(String title) {
+        return postList.stream()
+                .filter(post -> Objects.equals(post.getTitle(), title))
+                .findFirst()
+                .orElseGet(() -> {
+                    System.err.println("데이터를 찾을 수 없습니다");
+                    return null;
+                });
+    }
+
+    public boolean isValidate(String title) {
+        Post result = postList.stream()
+                .filter(post -> Objects.equals(post.getTitle(), title))
+                .findFirst()
+                .orElse(null);
+
+        return result != null;
     }
 
     public void deleteById(int id) {

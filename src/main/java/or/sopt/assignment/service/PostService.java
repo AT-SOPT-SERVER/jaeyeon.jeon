@@ -15,8 +15,14 @@ public class PostService {
 
     public void createPost(String title){
 
-       postServiceValidator.titleValidate(title);
-       postServiceValidator.contentValidate(title);
+       postServiceValidator.titleNotBlankValidate(title);
+       postServiceValidator.titleLengthValidate(title);
+
+       // 해당 로직을 Validate로 빼면 의존관계가 이상해짐: 과연 의존관계냐 일관성이냐
+        if(postRepository.isValidate(title)){
+            System.err.println("게시글의 제목이 중복되었습니다");
+            return;
+        }
 
         Post newPost = new Post(idGenerator.idGenerate(), title);
         postRepository.save(newPost);
@@ -37,8 +43,8 @@ public class PostService {
 
     public boolean update(int updateId, String newTitle) {
 
-        postServiceValidator.titleValidate(newTitle);
-        postServiceValidator.contentValidate(newTitle);
+        postServiceValidator.titleNotBlankValidate(newTitle);
+        postServiceValidator.titleLengthValidate(newTitle);
 
         Post findPost = postRepository.findById(updateId);
         postRepository.update(findPost, newTitle);
