@@ -51,4 +51,8 @@ public class PostService {
 
         return true;
     }
+
+    public List<Post> searchPostsByKeyword(String keyword) {
+        return postRepository.searchPostsByKeyword(keyword);
+    }
 }

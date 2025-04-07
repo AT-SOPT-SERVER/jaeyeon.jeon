@@ -67,4 +67,9 @@ public class PostRepository {
         }
     }
 
+    public List<Post> searchPostsByKeyword(String keyword) {
+        return postList.stream()
+                .filter(post -> post.getTitle() != null && post.getTitle().contains(keyword))
+                .toList();
+    }
 }
