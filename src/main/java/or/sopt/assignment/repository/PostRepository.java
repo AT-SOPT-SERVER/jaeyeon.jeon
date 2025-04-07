@@ -22,7 +22,10 @@ public class PostRepository {
         return postList.stream()
                 .filter(post -> post.getId() == id)
                 .findFirst()
-                .orElseThrow(()-> new IllegalArgumentException("게시글을 못찾겠습니다"));
+                .orElseGet(() -> {
+                    System.err.println("데이터를 찾을 수 없습니다");
+                    return null;
+                });
     }
 
     public void deleteById(int id) {
@@ -32,12 +35,16 @@ public class PostRepository {
         try {
             postList.remove(post1);
         } catch (Exception e) {
-            throw new IllegalArgumentException("삭제에 실패하였습니다");
+            System.err.println("게시글 삭제에 실패하였습니다");
         }
     }
 
     public void update(Post post, String updatedTitle) {
-        post.update(updatedTitle);
+        try {
+            post.update(updatedTitle);
+        } catch (Exception e) {
+            System.err.println("게시글 수정에 실패하였습니다");
+        }
     }
 
 }
