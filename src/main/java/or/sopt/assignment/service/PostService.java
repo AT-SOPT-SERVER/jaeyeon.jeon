@@ -3,6 +3,7 @@ package or.sopt.assignment.service;
 import or.sopt.assignment.domain.Post;
 import or.sopt.assignment.repository.PostRepository;
 import or.sopt.assignment.util.IdGenerator;
+import or.sopt.assignment.util.LocalDateTimeImpl;
 import or.sopt.assignment.validator.PostServiceValidator;
 
 import java.time.Duration;
@@ -14,10 +15,11 @@ public class PostService {
     private final PostRepository postRepository = new PostRepository();
     private final IdGenerator idGenerator = new IdGenerator();
     private final PostServiceValidator postServiceValidator = new PostServiceValidator(postRepository);
+    private final LocalDateTimeImpl localDateTime = new LocalDateTimeImpl();
 
     public void createPost(String title){
 
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = localDateTime.getNow();
 
         if (postServiceValidator.createdAtValidate()) {
             return;
