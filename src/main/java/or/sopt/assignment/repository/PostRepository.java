@@ -2,6 +2,9 @@ package or.sopt.assignment.repository;
 
 import or.sopt.assignment.domain.Post;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +12,25 @@ import java.util.Objects;
 
 public class PostRepository {
 
+    private static final String  FILE_PATH = "/Users/jeonjaeyeon/Desktop/sopt/";
+
     List<Post> postList =  new ArrayList<>();
 
     public void save(Post post) {
         postList.add(post);
+    }
+
+    public void savePersistence(Post post) throws IOException {
+
+        String fullFilePath = FILE_PATH + post.getTitle() + ".txt";
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fullFilePath, true))) {
+            writer.write(post.toString());
+            writer.newLine();
+        }
+        catch (Exception e) {
+            throw new RuntimeException("파일을 저장하는 도중 에러가 발생하였습니다",e);
+        }
     }
 
     public List<Post> findAll() {

@@ -3,12 +3,13 @@ package or.sopt.assignment;
 import or.sopt.assignment.controller.PostController;
 import or.sopt.assignment.domain.Post;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
 public class AssignmentApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         PostController controller = new PostController();
 

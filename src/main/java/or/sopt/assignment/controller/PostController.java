@@ -4,6 +4,7 @@ import or.sopt.assignment.domain.Post;
 import or.sopt.assignment.service.PostService;
 import or.sopt.assignment.util.IdGenerator;
 
+import java.io.IOException;
 import java.util.List;
 
 public class PostController {
@@ -12,7 +13,7 @@ public class PostController {
     private final PostService postService = new PostService();
 
     // 게시글 생성
-    public void createPost(String title){
+    public void createPost(String title) throws IOException {
         postService.createPost(title);
     }
 

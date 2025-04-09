@@ -6,6 +6,7 @@ import or.sopt.assignment.util.IdGenerator;
 import or.sopt.assignment.util.LocalDateTimeImpl;
 import or.sopt.assignment.validator.PostServiceValidator;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +18,7 @@ public class PostService {
     private final PostServiceValidator postServiceValidator = new PostServiceValidator(postRepository);
     private final LocalDateTimeImpl localDateTime = new LocalDateTimeImpl();
 
-    public void createPost(String title){
+    public void createPost(String title) throws IOException {
 
         LocalDateTime now = localDateTime.getNow();
 
@@ -36,7 +37,7 @@ public class PostService {
        }
 
         Post newPost = new Post(idGenerator.idGenerate(), title, now);
-        postRepository.save(newPost);
+        postRepository.savePersistence(newPost);
 
         System.out.println("✅ 게시글이 성공적으로 저장되었습니다!");
     }
