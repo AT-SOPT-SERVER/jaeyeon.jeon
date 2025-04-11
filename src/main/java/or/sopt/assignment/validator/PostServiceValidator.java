@@ -28,7 +28,7 @@ public class PostServiceValidator {
 
     public boolean titleLengthValidate(String title) {
         int length = getVisualLength(title);
-        if (length > 31){
+        if (length > 30){
             System.err.println("정해진 글자 수를 초과하였습니다 "+length);
             return true;
         }

@@ -20,7 +20,7 @@ public class PostRepository {
         postList.add(post);
     }
 
-    public void savePersistence(Post post) throws IOException {
+    public void savePersistence(Post post) {
 
         String fullFilePath = FILE_PATH + post.getTitle() + ".txt";
 

@@ -18,7 +18,7 @@ public class PostService {
     private final PostServiceValidator postServiceValidator = new PostServiceValidator(postRepository);
     private final LocalDateTimeImpl localDateTime = new LocalDateTimeImpl();
 
-    public void createPost(String title) throws IOException {
+    public void createPost(String title) {
 
         LocalDateTime now = localDateTime.getNow();
 
