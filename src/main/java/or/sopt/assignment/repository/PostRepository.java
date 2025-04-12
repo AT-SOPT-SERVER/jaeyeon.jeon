@@ -1,6 +1,7 @@
 package or.sopt.assignment.repository;
 
 import or.sopt.assignment.domain.Post;
+import org.springframework.stereotype.Repository;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Repository
 public class PostRepository {
 
     private static final String  FILE_PATH = "/Users/jeonjaeyeon/Desktop/sopt/";

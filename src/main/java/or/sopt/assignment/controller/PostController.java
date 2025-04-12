@@ -16,7 +16,11 @@ import java.util.List;
 @RestController
 public class PostController {
 
-    private final PostService postService = new PostService();
+    private final PostService postService;
+
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
 
     // 게시글 생성 - 단일 객체를 저장하니까 s를 붙이지 않는다, 난 명사는 무조건 복수형인줄 알았는데 그게 아니구나
     @PostMapping("/post")

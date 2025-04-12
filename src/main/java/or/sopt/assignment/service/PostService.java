@@ -5,18 +5,26 @@ import or.sopt.assignment.repository.PostRepository;
 import or.sopt.assignment.util.IdGenerator;
 import or.sopt.assignment.util.LocalDateTimeImpl;
 import or.sopt.assignment.validator.PostServiceValidator;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Service
 public class PostService {
 
-    private final PostRepository postRepository = new PostRepository();
+    private final PostRepository postRepository;
     private final IdGenerator idGenerator = new IdGenerator();
-    private final PostServiceValidator postServiceValidator = new PostServiceValidator(postRepository);
+    private final PostServiceValidator postServiceValidator;
     private final LocalDateTimeImpl localDateTime = new LocalDateTimeImpl();
+
+    public PostService(PostRepository postRepository,
+                       PostServiceValidator postServiceValidator) {
+        this.postRepository = postRepository;
+        this.postServiceValidator = postServiceValidator;
+    }
 
     public void createPost(String title) {
 

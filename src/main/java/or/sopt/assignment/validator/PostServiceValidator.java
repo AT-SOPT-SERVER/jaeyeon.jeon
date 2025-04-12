@@ -1,10 +1,12 @@
 package or.sopt.assignment.validator;
 
 import or.sopt.assignment.repository.PostRepository;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+@Component
 public class PostServiceValidator {
 
     private final PostRepository postRepository;
