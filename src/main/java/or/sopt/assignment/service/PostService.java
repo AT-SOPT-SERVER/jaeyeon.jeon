@@ -25,13 +25,18 @@ public class PostService {
         if (createValidate(title)) return;
 
         Post newPost = new Post(idGenerator.idGenerate(), title, now);
-        postRepository.savePersistence(newPost);
+        postRepository.save(newPost);
 
-        System.out.println("✅ 게시글이 성공적으로 저장되었습니다!");
+        System.out.println("✅ 게시글이 성공적으로 저장되었습니다!: "+ newPost.getTitle());
     }
 
     public List<Post> getAllPosts(){
-        return postRepository.findAll();
+        List<Post> all = postRepository.findAll();
+        for (Post post : all) {
+
+            System.out.println(post.getTitle());
+        }
+        return all;
     }
 
     public Post getPostById(int id){
