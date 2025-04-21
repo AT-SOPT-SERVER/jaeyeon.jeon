@@ -1,11 +1,17 @@
 package or.sopt.assignment.domain;
 
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 import java.time.LocalDateTime;
 
+@Entity
 public class Post {
 
-
+    @Id
+    @GeneratedValue
     private int id;
 
     private String title;
@@ -24,6 +30,10 @@ public class Post {
         this.createdAt = createdAt;
     }
 
+    public Post() {
+
+    }
+
     // Helper Method
     public int getId() {
         return id;
@@ -33,20 +43,8 @@ public class Post {
         return title;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     public void update(String title){
