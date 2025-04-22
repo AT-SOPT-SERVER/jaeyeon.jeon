@@ -17,16 +17,19 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final PostServiceValidator postServiceValidator;
+    private final LocalDateTimeImpl localDateTimeImpl;
 
     public PostService(PostRepository postRepository,
-                       PostServiceValidator postServiceValidator) {
+                       PostServiceValidator postServiceValidator,
+                       LocalDateTimeImpl localDateTimeImpl) {
         this.postRepository = postRepository;
         this.postServiceValidator = postServiceValidator;
+        this.localDateTimeImpl = localDateTimeImpl;
     }
 
     public void createPost(String title) {
 
-        Post newPost = new Post(title);
+        Post newPost = new Post(title,localDateTimeImpl.getNow());
         if (createValidate(title)) return;
 
         postRepository.save(newPost);

@@ -19,12 +19,7 @@ public class Post {
     private LocalDateTime createdAt;
 
     // Constructor
-    public Post(String title) {
-        this.title = title;
-    }
-
-    public Post(Long id, String title, LocalDateTime createdAt) {
-        this.id = id;
+    public Post(String title,LocalDateTime createdAt) {
         this.title = title;
         this.createdAt = createdAt;
     }
