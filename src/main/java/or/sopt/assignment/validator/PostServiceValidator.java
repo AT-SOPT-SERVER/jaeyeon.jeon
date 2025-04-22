@@ -21,8 +21,7 @@ public class PostServiceValidator {
             /*// 과연 예외를 던지는게 좋을까 -> 예외를 던지게 되면 서비스가 중단됨
             throw new IllegalArgumentException("제목을 입력해주세요");*/
 
-            System.err.println("제목을 입력해주세요");
-            return true;
+            throw new IllegalArgumentException("제목은 필수 입력값입니다");
         }
 
         return false;
@@ -31,8 +30,7 @@ public class PostServiceValidator {
     public boolean titleLengthValidate(String title) {
         int length = getVisualLength(title);
         if (length > 30){
-            System.err.println("정해진 글자 수를 초과하였습니다 "+length);
-            return true;
+            throw new IllegalArgumentException("정해진 글자 수를 초과하였습니다 "+length);
         }
 
         return false;
@@ -41,8 +39,7 @@ public class PostServiceValidator {
     public boolean titleDuplicate(String title) {
 
         if (postRepository.existsByTitle(title)){
-            System.err.println("제목이 중복되었습니다");
-            return true;
+            throw new IllegalArgumentException("제목이 중복되었습니다");
         }
         return false;
     }
