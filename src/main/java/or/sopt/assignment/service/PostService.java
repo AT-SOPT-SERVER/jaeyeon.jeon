@@ -16,9 +16,7 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final IdGenerator idGenerator = new IdGenerator();
     private final PostServiceValidator postServiceValidator;
-    private final LocalDateTimeImpl localDateTime = new LocalDateTimeImpl();
 
     public PostService(PostRepository postRepository,
                        PostServiceValidator postServiceValidator) {
@@ -28,52 +26,43 @@ public class PostService {
 
     public void createPost(String title) {
 
-        LocalDateTime now = localDateTime.getNow();
-
+        Post newPost = new Post(title);
         if (createValidate(title)) return;
 
-        Post newPost = new Post(idGenerator.idGenerate(), title, now);
         postRepository.save(newPost);
-
-        System.out.println("✅ 게시글이 성공적으로 저장되었습니다!: "+ newPost.getTitle());
     }
 
     public List<Post> getAllPosts(){
-        List<Post> all = postRepository.findAll();
-        for (Post post : all) {
-
-            System.out.println(post.getTitle());
-        }
-        return all;
+        return postRepository.findAll();
     }
 
-    public Post getPostById(int id){
-        Post result = postRepository.findById(id);
-
-        if(result == null){
-            System.err.println("해당하는 게시글이 존재하지 않습니다");
-        }
-        return result;
+    public Post getPostById(Long id){
+        return postRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("해당하는 게시글이 존재하지 않습니다"));
     }
 
-    public boolean deletePostById(int id){
+    public boolean deletePostById(Long id){
         postRepository.deleteById(id);
+
         return true;
     }
 
-    public boolean update(int updateId, String newTitle) {
+    public boolean update(Long updateId, String newTitle) {
 
         postServiceValidator.titleNotBlankValidate(newTitle);
         postServiceValidator.titleLengthValidate(newTitle);
 
-        Post findPost = postRepository.findById(updateId);
-        postRepository.update(findPost, newTitle);
+        Post findPost = postRepository.findById(updateId)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 게시글이 존재하지 않습니다"));
 
+        findPost.update(newTitle);
+
+        postRepository.save(findPost);
         return true;
     }
 
     public List<Post> searchPostsByKeyword(String keyword) {
-        List<Post> result = postRepository.searchPostsByKeyword(keyword);
+        List<Post> result = postRepository.findByTitleContaining(keyword);
 
         if (result.isEmpty()){
             System.err.println("키워드를 포함한 게시글이 존재하지 않습니다");
@@ -88,9 +77,9 @@ public class PostService {
 
 
     private boolean createValidate(String title) {
-        if (postServiceValidator.createdAtValidate()) {
+      /*  if (postServiceValidator.createdAtValidate()) {
             return true;
-        }
+        }*/
         if (postServiceValidator.titleNotBlankValidate(title)){
             return true;
         }

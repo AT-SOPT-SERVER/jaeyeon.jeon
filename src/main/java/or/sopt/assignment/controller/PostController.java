@@ -5,10 +5,7 @@ import or.sopt.assignment.dto.PostRequestDTO;
 import or.sopt.assignment.service.PostService;
 import or.sopt.assignment.util.IdGenerator;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,21 +32,25 @@ public class PostController {
     }
 
     // 게시글 상세 조회
-    public Post getPostById(int id) {
+    @GetMapping("/post")
+    public Post getPostById(@RequestParam Long id) {
         return postService.getPostById(id);
     }
 
     // 게시글 삭제
-    public boolean deletePostById(int deleteId) {
+    @DeleteMapping("/post")
+    public boolean deletePostById(@RequestParam Long deleteId) {
         return postService.deletePostById(deleteId);
     }
 
     // 게시글 수정
-    public boolean updatePostTitle(int updateId, String newTitle) {
+    @PatchMapping("/post")
+    public boolean updatePostTitle(@RequestParam Long updateId, String newTitle) {
         return postService.update(updateId, newTitle);
     }
 
-    public List<Post> searchPostsByKeyword(String keyword) {
+    @GetMapping("/posts/keyword")
+    public List<Post> searchPostsByKeyword(@RequestParam String keyword) {
         return postService.searchPostsByKeyword(keyword);
     }
 }

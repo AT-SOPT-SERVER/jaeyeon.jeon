@@ -12,19 +12,18 @@ public class Post {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
 
     private String title;
 
     private LocalDateTime createdAt;
 
     // Constructor
-    public Post(int id, String title) {
-        this.id = id;
+    public Post(String title) {
         this.title = title;
     }
 
-    public Post(int id, String title, LocalDateTime createdAt) {
+    public Post(Long id, String title, LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
         this.createdAt = createdAt;
@@ -35,7 +34,7 @@ public class Post {
     }
 
     // Helper Method
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

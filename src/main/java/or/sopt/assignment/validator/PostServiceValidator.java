@@ -40,14 +40,14 @@ public class PostServiceValidator {
 
     public boolean titleDuplicate(String title) {
 
-        if (postRepository.isValidate(title)){
+        if (postRepository.existsByTitle(title)){
             System.err.println("제목이 중복되었습니다");
             return true;
         }
         return false;
     }
 
-    public boolean createdAtValidate() {
+/*    public boolean createdAtValidate() {
         LocalDateTime lastCreatedAt = postRepository.getLastLocalDatetime();
         if (lastCreatedAt != null) {
             Duration duration = Duration.between(lastCreatedAt, LocalDateTime.now());
@@ -57,7 +57,7 @@ public class PostServiceValidator {
             }
         }
         return false;
-    }
+    }*/
 
 
     public static int getVisualLength(String input) {
