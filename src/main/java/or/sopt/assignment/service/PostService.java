@@ -1,15 +1,13 @@
 package or.sopt.assignment.service;
 
 import or.sopt.assignment.domain.Post;
+import or.sopt.assignment.dto.PostCreateRequestDTO;
+import or.sopt.assignment.dto.PostGetResponseDTO;
 import or.sopt.assignment.repository.PostRepository;
-import or.sopt.assignment.util.IdGenerator;
 import or.sopt.assignment.util.LocalDateTimeImpl;
 import or.sopt.assignment.validator.PostServiceValidator;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,21 +25,27 @@ public class PostService {
         this.localDateTimeImpl = localDateTimeImpl;
     }
 
-    public void createPost(String title) {
+    public void createPost(PostCreateRequestDTO postRequestDTO) {
 
-        Post newPost = new Post(title,localDateTimeImpl.getNow());
-        if (createValidate(title)) return;
+        Post newPost = new Post(postRequestDTO.getTitle(),localDateTimeImpl.getNow());
+        if (createValidate(postRequestDTO.getTitle())) return;
 
         postRepository.save(newPost);
     }
 
-    public List<Post> getAllPosts(){
-        return postRepository.findAll();
+    public List<PostGetResponseDTO> getAllPosts(){
+        List<Post> findPosts = postRepository.findAll();
+
+        return findPosts.stream().map(
+                post -> new PostGetResponseDTO(post.getTitle())
+        ).toList();
     }
 
-    public Post getPostById(Long id){
-        return postRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("해당하는 게시글이 존재하지 않습니다"));
+    public PostGetResponseDTO getPostById(Long id){
+        Post findPost = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 게시글이 존재하지 않습니다"));
+
+        return new PostGetResponseDTO(findPost.getTitle());
     }
 
     public boolean deletePostById(Long id){
@@ -64,14 +68,16 @@ public class PostService {
         return true;
     }
 
-    public List<Post> searchPostsByKeyword(String keyword) {
+    public List<PostGetResponseDTO> searchPostsByKeyword(String keyword) {
         List<Post> result = postRepository.findByTitleContaining(keyword);
 
         if (result.isEmpty()){
             System.err.println("키워드를 포함한 게시글이 존재하지 않습니다");
         }
 
-        return result;
+        return result.stream().map(
+                post -> new PostGetResponseDTO(post.getTitle())
+        ).toList();
     }
 
 

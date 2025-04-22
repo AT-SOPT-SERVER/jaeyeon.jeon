@@ -1,14 +1,14 @@
 package or.sopt.assignment.dto;
 
-public class PostRequestDTO {
+public class PostCreateRequestDTO {
 
     private String title;
 
-    public PostRequestDTO(String title) {
+    public PostCreateRequestDTO(String title) {
         this.title = title;
     }
 
-    public PostRequestDTO() {
+    public PostCreateRequestDTO() {
     }
 
     public String getTitle() {
