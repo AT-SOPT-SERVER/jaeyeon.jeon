@@ -26,6 +26,7 @@ import java.util.Optional;
 @RestControllerAdvice(annotations = {RestController.class})
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
+    // @Valid, @Validated 로 감지되는 ConstraintViolationException 를 핸들링합니다
     @ExceptionHandler
     public ResponseEntity<Object> validation(ConstraintViolationException e, WebRequest request) {
 
@@ -39,6 +40,7 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         return handleExceptionInternalConstraint(e, errorStatus, HttpHeaders.EMPTY, request);
     }
 
+    // @RequestBody 에서 JSON 필드의 유효성에 결함이 있을때 발생하는 예외를 핸들링합니다
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
@@ -57,7 +59,19 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(headers).body(body);
     }
 
+    /*
+    * 해당 코드로 제가 커스텀한 에러를 핸들링합니다
+    * GeneralException.class를 상속받은 핸들러가 발생시키는 예외를 핸들링 할 수 있습니다
+    * */
+    @ExceptionHandler(GeneralException.class)
+    public ResponseEntity<Object> onThrowException(GeneralException generalException, HttpServletRequest request) {
 
+        ErrorReasonDTO errorReason = generalException.getErrorReasonHttpStatus();
+        return handleExceptionInternal(generalException, errorReason, null, request);
+    }
+
+
+    // 그 외에 예상하지 못했던 다양한 예외사항을 500에러를 통해 클라이언트가 확인 할 수 있도록 합니다
     @ExceptionHandler
     public ResponseEntity<Object> exception(Exception e, WebRequest request) {
 
@@ -69,13 +83,6 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
                 request,
                 e.getMessage()
         );
-    }
-
-    @ExceptionHandler(GeneralException.class)
-    public ResponseEntity<Object> onThrowException(GeneralException generalException, HttpServletRequest request) {
-
-        ErrorReasonDTO errorReason = generalException.getErrorReasonHttpStatus();
-        return handleExceptionInternal(generalException, errorReason, null, request);
     }
 
     private ResponseEntity<Object> handleExceptionInternal(
@@ -91,13 +98,6 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         ApiResponse<Object> body = ApiResponse.onFailure(errorStatus.getCode(), errorStatus.getMessage(), errorPoint);
 
         return super.handleExceptionInternal(e, body, headers, status, request);
-    }
-
-    private ResponseEntity<Object> handleExceptionInternalArgs(
-            Exception e, HttpHeaders headers, ErrorStatus errorStatus, WebRequest request, Map<String, String> errorArgs) {
-        ApiResponse<Object> body = ApiResponse.onFailure(errorStatus.getCode(), errorStatus.getMessage(), errorArgs);
-
-        return super.handleExceptionInternal(e, body, headers, errorStatus.getHttpStatus(), request);
     }
 
     private ResponseEntity<Object> handleExceptionInternalConstraint(

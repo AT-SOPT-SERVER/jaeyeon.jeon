@@ -48,10 +48,10 @@ public class PostService {
         return new PostGetResponseDTO(findPost.getTitle());
     }
 
-    public boolean deletePostById(Long id){
+    public Boolean deletePostById(Long id){
         postRepository.deleteById(id);
 
-        return true;
+        return Boolean.TRUE;
     }
 
     public boolean update(Long updateId, String newTitle) {
