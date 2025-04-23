@@ -1,10 +1,9 @@
 package or.sopt.assignment.validator;
 
+import or.sopt.assignment.apiPayLoad.code.status.ErrorStatus;
+import or.sopt.assignment.apiPayLoad.exception.handler.PostHandler;
 import or.sopt.assignment.repository.PostRepository;
 import org.springframework.stereotype.Component;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
 
 @Component
 public class PostServiceValidator {
@@ -17,20 +16,16 @@ public class PostServiceValidator {
 
 
     public boolean titleNotBlankValidate(String title) {
-        if (title.isEmpty()){
-            /*// 과연 예외를 던지는게 좋을까 -> 예외를 던지게 되면 서비스가 중단됨
-            throw new IllegalArgumentException("제목을 입력해주세요");*/
-
-            throw new IllegalArgumentException("제목은 필수 입력값입니다");
+        if (title == null || title.trim().isEmpty()) {
+            throw new PostHandler(ErrorStatus._POST_TITLE_EXSIST);
         }
 
         return false;
     }
-
     public boolean titleLengthValidate(String title) {
         int length = getVisualLength(title);
         if (length > 30){
-            throw new IllegalArgumentException("정해진 글자 수를 초과하였습니다 "+length);
+            throw new PostHandler(ErrorStatus._POST_TITLE_LENGTH);
         }
 
         return false;
@@ -39,7 +34,7 @@ public class PostServiceValidator {
     public boolean titleDuplicate(String title) {
 
         if (postRepository.existsByTitle(title)){
-            throw new IllegalArgumentException("제목이 중복되었습니다");
+            throw new PostHandler(ErrorStatus._POST_TITLE_DUPLICATE);
         }
         return false;
     }
