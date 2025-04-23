@@ -27,8 +27,8 @@ public class PostService {
 
     public void createPost(PostCreateRequestDTO postRequestDTO) {
 
-        Post newPost = new Post(postRequestDTO.getTitle(),localDateTimeImpl.getNow());
-        if (createValidate(postRequestDTO.getTitle())) return;
+        Post newPost = new Post(postRequestDTO.title(),localDateTimeImpl.getNow());
+        if (createValidate(postRequestDTO.title())) return;
 
         postRepository.save(newPost);
     }
