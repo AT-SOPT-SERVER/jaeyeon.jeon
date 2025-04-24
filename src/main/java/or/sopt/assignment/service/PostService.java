@@ -44,14 +44,15 @@ public class PostService {
     }
 
     public PostGetResponseDTO getPostById(Long id){
-        Post findPost = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 게시글이 존재하지 않습니다"));
+        Post findPost = findPost(id);
 
         return new PostGetResponseDTO(findPost.getTitle(),findPost.getId());
     }
 
     public Boolean deletePostById(Long id){
-        postRepository.deleteById(id);
+
+        Post post = findPost(id);
+        postRepository.delete(post);
 
         return Boolean.TRUE;
     }
@@ -61,8 +62,7 @@ public class PostService {
         postServiceValidator.titleNotBlankValidate(newTitle);
         postServiceValidator.titleLengthValidate(newTitle);
 
-        Post findPost = postRepository.findById(updateId)
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 게시글이 존재하지 않습니다"));
+        Post findPost = findPost(updateId);
 
         findPost.update(newTitle);
 
@@ -84,7 +84,10 @@ public class PostService {
 
 
 
-
+    private Post findPost(Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 게시글이 존재하지 않습니다"));
+    }
 
     private void createValidate(String title) {
 

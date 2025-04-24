@@ -36,23 +36,24 @@ public class PostController {
     }
 
     // 게시글 상세 조회
-    @GetMapping("/post")
-    public ApiResponse<PostGetResponseDTO> getPostById(@RequestParam Long id) {
+    @GetMapping("/post/{id}")
+    public ApiResponse<PostGetResponseDTO> getPostById(@PathVariable Long id) {
         PostGetResponseDTO result = postService.getPostById(id);
 
         return ApiResponse.onSuccess(result);
     }
 
     // 게시글 삭제
-    @DeleteMapping("/post")
-    public ApiResponse<Boolean> deletePostById(@RequestParam Long deleteId) {
-        return ApiResponse.onSuccess(postService.deletePostById(deleteId));
+    @DeleteMapping("/post/{id}")
+    public ApiResponse<Boolean> deletePostById(@PathVariable Long id) {
+        return ApiResponse.onSuccess(postService.deletePostById(id));
     }
 
     // 게시글 수정
-    @PatchMapping("/post")
-    public ApiResponse<Boolean> updatePostTitle(@RequestParam Long updateId, String newTitle) {
-        return ApiResponse.onSuccess(postService.update(updateId,newTitle));
+    @PatchMapping("/post/{id}")
+    public ApiResponse<Boolean> updatePostTitle(@PathVariable Long id,
+                                                @RequestParam String newTitle) {
+        return ApiResponse.onSuccess(postService.update(id,newTitle));
     }
 
     @GetMapping("/posts/keyword")
