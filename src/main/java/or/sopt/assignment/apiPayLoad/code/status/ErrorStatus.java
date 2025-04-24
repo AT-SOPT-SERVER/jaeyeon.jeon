@@ -19,7 +19,9 @@ public enum ErrorStatus implements BaseErrorCode {
 
     _POST_TITLE_EXSIST(HttpStatus.BAD_REQUEST,"POST4001","제목은 필수 입력값입니다"),
     _POST_TITLE_LENGTH(HttpStatus.BAD_REQUEST,"POST4002","제목의 길이는 30자를 넘을 수 없습니다"),
-    _POST_TITLE_DUPLICATE(HttpStatus.BAD_REQUEST,"POST4003","제목이 중복되었습니다"),;
+    _POST_TITLE_DUPLICATE(HttpStatus.BAD_REQUEST,"POST4003","제목이 중복되었습니다"),
+    _POST_NOT_FOUND(HttpStatus.BAD_REQUEST,"POST4004","게시글을 찾을 수 없습니다"),
+    _POST_TIMER_VALID(HttpStatus.NOT_FOUND,"POST4005","게시글은 작성 후 3분이 지나야 새로 작성 할 수 있습니다");
 
 
     private final HttpStatus httpStatus;

@@ -7,10 +7,12 @@ import or.sopt.assignment.repository.PostRepository;
 import or.sopt.assignment.util.LocalDateTimeImpl;
 import or.sopt.assignment.validator.PostServiceValidator;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class PostService {
 
     private final PostRepository postRepository;
@@ -27,8 +29,8 @@ public class PostService {
 
     public void createPost(PostCreateRequestDTO postRequestDTO) {
 
+        createValidate(postRequestDTO.title());
         Post newPost = new Post(postRequestDTO.title(),localDateTimeImpl.getNow());
-        if (createValidate(postRequestDTO.title())) return;
 
         postRepository.save(newPost);
     }
@@ -37,7 +39,7 @@ public class PostService {
         List<Post> findPosts = postRepository.findAll();
 
         return findPosts.stream().map(
-                post -> new PostGetResponseDTO(post.getTitle())
+                post -> new PostGetResponseDTO(post.getTitle(),post.getId())
         ).toList();
     }
 
@@ -45,7 +47,7 @@ public class PostService {
         Post findPost = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 게시글이 존재하지 않습니다"));
 
-        return new PostGetResponseDTO(findPost.getTitle());
+        return new PostGetResponseDTO(findPost.getTitle(),findPost.getId());
     }
 
     public Boolean deletePostById(Long id){
@@ -64,7 +66,6 @@ public class PostService {
 
         findPost.update(newTitle);
 
-        postRepository.save(findPost);
         return true;
     }
 
@@ -76,7 +77,7 @@ public class PostService {
         }
 
         return result.stream().map(
-                post -> new PostGetResponseDTO(post.getTitle())
+                post -> new PostGetResponseDTO(post.getTitle(),post.getId())
         ).toList();
     }
 
@@ -85,19 +86,11 @@ public class PostService {
 
 
 
-    private boolean createValidate(String title) {
-      /*  if (postServiceValidator.createdAtValidate()) {
-            return true;
-        }*/
-        if (postServiceValidator.titleNotBlankValidate(title)){
-            return true;
-        }
-        if (postServiceValidator.titleLengthValidate(title)){
-            return true;
-        }
-        if (postServiceValidator.titleDuplicate(title)){
-            return true;
-        }
-        return false;
+    private void createValidate(String title) {
+
+        postServiceValidator.validatePostCreationTime();
+        postServiceValidator.titleNotBlankValidate(title);
+        postServiceValidator.titleLengthValidate(title);
+        postServiceValidator.titleDuplicate(title);
     }
 }
