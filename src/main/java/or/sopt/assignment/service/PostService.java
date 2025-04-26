@@ -1,92 +1,99 @@
 package or.sopt.assignment.service;
 
 import or.sopt.assignment.domain.Post;
+import or.sopt.assignment.dto.PostCreateRequestDTO;
+import or.sopt.assignment.dto.PostGetResponseDTO;
 import or.sopt.assignment.repository.PostRepository;
-import or.sopt.assignment.util.IdGenerator;
 import or.sopt.assignment.util.LocalDateTimeImpl;
 import or.sopt.assignment.validator.PostServiceValidator;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.List;
 
+@Service
+@Transactional
 public class PostService {
 
-    private final PostRepository postRepository = new PostRepository();
-    private final IdGenerator idGenerator = new IdGenerator();
-    private final PostServiceValidator postServiceValidator = new PostServiceValidator(postRepository);
-    private final LocalDateTimeImpl localDateTime = new LocalDateTimeImpl();
+    private final PostRepository postRepository;
+    private final PostServiceValidator postServiceValidator;
+    private final LocalDateTimeImpl localDateTimeImpl;
 
-    public void createPost(String title) {
-
-        LocalDateTime now = localDateTime.getNow();
-
-        if (createValidate(title)) return;
-
-        Post newPost = new Post(idGenerator.idGenerate(), title, now);
-        postRepository.savePersistence(newPost);
-
-        System.out.println("✅ 게시글이 성공적으로 저장되었습니다!");
+    public PostService(PostRepository postRepository,
+                       PostServiceValidator postServiceValidator,
+                       LocalDateTimeImpl localDateTimeImpl) {
+        this.postRepository = postRepository;
+        this.postServiceValidator = postServiceValidator;
+        this.localDateTimeImpl = localDateTimeImpl;
     }
 
-    public List<Post> getAllPosts(){
-        return postRepository.findAll();
+    public void createPost(PostCreateRequestDTO postRequestDTO) {
+
+        createValidate(postRequestDTO.title());
+        Post newPost = new Post(postRequestDTO.title(),localDateTimeImpl.getNow());
+
+        postRepository.save(newPost);
     }
 
-    public Post getPostById(int id){
-        Post result = postRepository.findById(id);
+    public List<PostGetResponseDTO> getAllPosts(){
+        List<Post> findPosts = postRepository.findAll();
 
-        if(result == null){
-            System.err.println("해당하는 게시글이 존재하지 않습니다");
-        }
-        return result;
+        return findPosts.stream().map(
+                post -> new PostGetResponseDTO(post.getTitle(),post.getId())
+        ).toList();
     }
 
-    public boolean deletePostById(int id){
-        postRepository.deleteById(id);
-        return true;
+    public PostGetResponseDTO getPostById(Long id){
+        Post findPost = findPost(id);
+
+        return new PostGetResponseDTO(findPost.getTitle(),findPost.getId());
     }
 
-    public boolean update(int updateId, String newTitle) {
+    public Boolean deletePostById(Long id){
+
+        Post post = findPost(id);
+        postRepository.delete(post);
+
+        return Boolean.TRUE;
+    }
+
+    public boolean update(Long updateId, String newTitle) {
 
         postServiceValidator.titleNotBlankValidate(newTitle);
         postServiceValidator.titleLengthValidate(newTitle);
 
-        Post findPost = postRepository.findById(updateId);
-        postRepository.update(findPost, newTitle);
+        Post findPost = findPost(updateId);
+
+        findPost.update(newTitle);
 
         return true;
     }
 
-    public List<Post> searchPostsByKeyword(String keyword) {
-        List<Post> result = postRepository.searchPostsByKeyword(keyword);
+    public List<PostGetResponseDTO> searchPostsByKeyword(String keyword) {
+        List<Post> result = postRepository.findByTitleContaining(keyword);
 
         if (result.isEmpty()){
             System.err.println("키워드를 포함한 게시글이 존재하지 않습니다");
         }
 
-        return result;
+        return result.stream().map(
+                post -> new PostGetResponseDTO(post.getTitle(),post.getId())
+        ).toList();
     }
 
 
 
 
+    private Post findPost(Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 게시글이 존재하지 않습니다"));
+    }
 
+    private void createValidate(String title) {
 
-    private boolean createValidate(String title) {
-        if (postServiceValidator.createdAtValidate()) {
-            return true;
-        }
-        if (postServiceValidator.titleNotBlankValidate(title)){
-            return true;
-        }
-        if (postServiceValidator.titleLengthValidate(title)){
-            return true;
-        }
-        if (postServiceValidator.titleDuplicate(title)){
-            return true;
-        }
-        return false;
+        postServiceValidator.validatePostCreationTime();
+        postServiceValidator.titleNotBlankValidate(title);
+        postServiceValidator.titleLengthValidate(title);
+        postServiceValidator.titleDuplicate(title);
     }
 }
