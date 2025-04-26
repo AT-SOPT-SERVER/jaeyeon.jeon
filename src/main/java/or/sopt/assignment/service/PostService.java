@@ -1,5 +1,6 @@
 package or.sopt.assignment.service;
 
+import lombok.RequiredArgsConstructor;
 import or.sopt.assignment.domain.Post;
 import or.sopt.assignment.dto.PostCreateRequestDTO;
 import or.sopt.assignment.dto.PostGetResponseDTO;
