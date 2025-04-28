@@ -1,6 +1,5 @@
 package or.sopt.assignment.controller;
 
-import or.sopt.assignment.apiPayLoad.ApiResponse;
 import or.sopt.assignment.domain.Post;
 import or.sopt.assignment.dto.PostCreateRequestDTO;
 import or.sopt.assignment.dto.PostGetResponseDTO;
@@ -21,45 +20,42 @@ public class PostController {
 
     // 게시글 생성 - 단일 객체를 저장하니까 s를 붙이지 않는다, 난 명사는 무조건 복수형인줄 알았는데 그게 아니구나
     @PostMapping("/post")
-    public ApiResponse<String> createPost(@RequestBody PostCreateRequestDTO request){
+    public String createPost(@RequestBody PostCreateRequestDTO request){
         postService.createPost(request);
 
-        return ApiResponse.onSuccess("게시글이 성공적으로 등록되었습니다");
+        return "게시글이 성공적으로 등록되었습니다";
     }
 
     // 게시글 전체 조회
     @GetMapping("/posts")
-    public ApiResponse<List<PostGetResponseDTO>> getAllPosts() {
-        List<PostGetResponseDTO> result = postService.getAllPosts();
+    public List<PostGetResponseDTO> getAllPosts() {
 
-        return ApiResponse.onSuccess(result);
+        return postService.getAllPosts();
     }
 
     // 게시글 상세 조회
     @GetMapping("/post/{id}")
-    public ApiResponse<PostGetResponseDTO> getPostById(@PathVariable Long id) {
-        PostGetResponseDTO result = postService.getPostById(id);
+    public PostGetResponseDTO getPostById(@PathVariable Long id) {
 
-        return ApiResponse.onSuccess(result);
+        return postService.getPostById(id);
     }
 
     // 게시글 삭제
     @DeleteMapping("/post/{id}")
-    public ApiResponse<Boolean> deletePostById(@PathVariable Long id) {
-        return ApiResponse.onSuccess(postService.deletePostById(id));
+    public Boolean deletePostById(@PathVariable Long id) {
+        return postService.deletePostById(id);
     }
 
     // 게시글 수정
     @PatchMapping("/post/{id}")
-    public ApiResponse<Boolean> updatePostTitle(@PathVariable Long id,
+    public Boolean updatePostTitle(@PathVariable Long id,
                                                 @RequestParam String newTitle) {
-        return ApiResponse.onSuccess(postService.update(id,newTitle));
+        return postService.update(id,newTitle);
     }
 
     @GetMapping("/posts/keyword")
-    public ApiResponse<List<PostGetResponseDTO>> searchPostsByKeyword(@RequestParam String keyword) {
-        List<PostGetResponseDTO> result = postService.searchPostsByKeyword(keyword);
+    public List<PostGetResponseDTO> searchPostsByKeyword(@RequestParam String keyword) {
 
-        return ApiResponse.onSuccess(result);
+        return postService.searchPostsByKeyword(keyword);
     }
 }

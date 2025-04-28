@@ -1,7 +1,5 @@
 package or.sopt.assignment.validator;
 
-import or.sopt.assignment.apiPayLoad.code.status.ErrorStatus;
-import or.sopt.assignment.apiPayLoad.exception.handler.PostHandler;
 import or.sopt.assignment.domain.Post;
 import or.sopt.assignment.repository.PostRepository;
 import or.sopt.assignment.util.LocalDateTimeImpl;
@@ -16,37 +14,37 @@ public class PostServiceValidator {
     private final PostRepository postRepository;
     private final LocalDateTimeImpl localDateTime;
 
-    public PostServiceValidator(PostRepository postRepository) {
+    public PostServiceValidator(PostRepository postRepository, LocalDateTimeImpl localDateTime) {
         this.postRepository = postRepository;
-        this.localDateTime = new LocalDateTimeImpl();
+        this.localDateTime = localDateTime;
     }
 
 
     public void titleNotBlankValidate(String title) {
         if (title == null || title.trim().isEmpty()) {
-            throw new PostHandler(ErrorStatus._POST_TITLE_EXSIST);
+            throw new IllegalArgumentException("제목없음");
         }
     }
     public void titleLengthValidate(String title) {
         int length = getVisualLength(title);
         if (length > 30){
-            throw new PostHandler(ErrorStatus._POST_TITLE_LENGTH);
+            throw new IllegalArgumentException("제목 길이 짧음");
         }
     }
 
     public void titleDuplicate(String title) {
 
         if (postRepository.existsByTitle(title)){
-            throw new PostHandler(ErrorStatus._POST_TITLE_DUPLICATE);
+            throw new IllegalArgumentException("제목중복");
         }
     }
 
     public void validatePostCreationTime() {
         postRepository.findTopByOrderByCreatedAtDesc()
                 .filter(post -> post.getCreatedAt() != null)
-                .filter(post -> post.getCreatedAt().isAfter(LocalDateTime.now().minusMinutes(3)))
+                .filter(post -> post.getCreatedAt().isAfter(localDateTime.getNow().minusMinutes(3)))
                 .ifPresent(post -> {
-                    throw new PostHandler(ErrorStatus._POST_TIMER_VALID);
+                    throw new IllegalArgumentException("3분 안됨");
                 });
     }
 
