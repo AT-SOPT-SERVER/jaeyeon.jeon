@@ -19,6 +19,8 @@ public class Post {
 
     private LocalDateTime createdAt;
 
+    private Tags tags;
+
     public User getUser() {
         return user;
     }
@@ -30,12 +32,17 @@ public class Post {
         return content;
     }
 
+    public Tags getTags() {
+        return tags;
+    }
+
     // Constructor
-    public Post(String title,String content,LocalDateTime createdAt,User user) {
+    public Post(String title,String content,LocalDateTime createdAt,User user,Tags tags) {
         this.title = title;
         this.createdAt = createdAt;
         this.content = content;
         this.user = user;
+        this.tags = tags;
     }
 
     public Post() {

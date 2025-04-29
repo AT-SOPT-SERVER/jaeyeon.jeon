@@ -1,6 +1,7 @@
 package or.sopt.assignment.service;
 
 import or.sopt.assignment.domain.Post;
+import or.sopt.assignment.domain.Tags;
 import or.sopt.assignment.domain.User;
 import or.sopt.assignment.dto.PostCreateRequestDTO;
 import or.sopt.assignment.dto.PostGetResponseDTO;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -43,11 +43,19 @@ public class PostService {
 
         User findUser = findUser(postRequestDTO);
         createValidate(postRequestDTO.title(), postRequestDTO.content());
+        Tags postTags;
+
+        try {
+            postTags = Tags.valueOf(postRequestDTO.tags().toUpperCase());
+        } catch (Exception e) {
+            throw new PostHandler(ErrorStatus._POST_TAG_NOT_FOUND);
+        }
 
         Post newPost = new Post(postRequestDTO.title(),
                 postRequestDTO.content(),
                 localDateTimeImpl.getNow(),
-                findUser);
+                findUser,
+                postTags);
 
         postRepository.save(newPost);
 
@@ -118,6 +126,27 @@ public class PostService {
 
     }
 
+
+    public List<PostGetResponseDTO> searchByTags(String tags) {
+
+        Tags postTags;
+
+        try {
+            postTags = Tags.valueOf(tags);
+        } catch (Exception e) {
+            throw new PostHandler(ErrorStatus._POST_TAG_NOT_FOUND);
+        }
+
+        List<Post> posts = postRepository.findByTags(postTags);
+
+        return posts.stream().map(
+                post -> new PostGetResponseDTO(
+                        post.getTitle(),
+                        post.getContent(),
+                        post.getUser().getName()
+                )
+        ).toList();
+    }
 
 
 

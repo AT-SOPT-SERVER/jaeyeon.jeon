@@ -72,4 +72,11 @@ public class PostController {
 
         return ApiResponse.ok(SuccessStatus._READ_SUCCESS,result);
     }
+
+    @GetMapping("/posts/tags")
+    public ResponseEntity<ResponseDTO<?>> searchPostsByTag(@RequestParam String tags) {
+        List<PostGetResponseDTO> result = postService.searchByTags(tags);
+
+        return ApiResponse.ok(SuccessStatus._READ_SUCCESS,result);
+    }
 }
