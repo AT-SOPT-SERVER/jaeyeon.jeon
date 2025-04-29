@@ -33,7 +33,7 @@ public class PostController {
     @GetMapping("/posts")
     public ResponseEntity<ResponseDTO<?>> getAllPosts() {
 
-        return ApiResponse.ok(SuccessStatus._CREATED_SUCCESS,postService.getAllPosts());
+        return ApiResponse.ok(SuccessStatus._READ_SUCCESS,postService.getAllPosts());
     }
 
     // 게시글 상세 조회
