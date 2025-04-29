@@ -83,6 +83,7 @@ public class PostService {
 
         postServiceValidator.titleNotBlankValidate(postRequestDTO.newTitle());
         postServiceValidator.titleLengthValidate(postRequestDTO.newContent());
+        postServiceValidator.contentLengthValidate(postRequestDTO.newContent());
 
         Post findPost = findPost(updateId);
 
@@ -120,6 +121,7 @@ public class PostService {
         postServiceValidator.contentNotBlankValidate(content);
         postServiceValidator.titleNotBlankValidate(title);
         postServiceValidator.titleLengthValidate(title);
+        postServiceValidator.contentLengthValidate(content);
         postServiceValidator.titleDuplicate(title);
     }
 

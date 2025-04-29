@@ -57,6 +57,13 @@ public class PostServiceValidator {
                 });
     }
 
+    public void contentLengthValidate(String content) {
+        int length = getVisualLength(content);
+        if (length > 1000){
+            throw new PostHandler(ErrorStatus._POST_CONTENT_LENGTH);
+        }
+    }
+
 
 
     public static int getVisualLength(String input) {
