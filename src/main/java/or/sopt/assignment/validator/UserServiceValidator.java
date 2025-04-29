@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class UserServiceValidator {
 
     public void userNameLengthValidation(String name) {
-        if (name.length() < 10) {
+        if (name.length() > 10) {
             throw new UserHandler(ErrorStatus._USER_NAME_LENGTH);
         }
     }

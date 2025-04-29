@@ -5,6 +5,7 @@ import or.sopt.assignment.domain.User;
 import or.sopt.assignment.dto.PostCreateRequestDTO;
 import or.sopt.assignment.dto.PostGetResponseDTO;
 import or.sopt.assignment.dto.PostUpdateRequestDTO;
+import or.sopt.assignment.global.exception.handler.PostHandler;
 import or.sopt.assignment.global.exception.handler.UserHandler;
 import or.sopt.assignment.global.status.ErrorStatus;
 import or.sopt.assignment.repository.PostRepository;
@@ -96,10 +97,6 @@ public class PostService {
     public List<PostGetResponseDTO> searchPostsByKeyword(String keyword) {
         List<Post> result = postRepository.findByTitleContaining(keyword);
 
-        if (result.isEmpty()){
-            System.err.println("키워드를 포함한 게시글이 존재하지 않습니다");
-        }
-
         return result.stream().map(
                 post -> new PostGetResponseDTO(post.getTitle(),
                         post.getContent(),
@@ -107,12 +104,26 @@ public class PostService {
         ).toList();
     }
 
+    public List<PostGetResponseDTO> searchByUserName(String name) {
+
+        List<Post> posts = postRepository.findByUserName(name);
+
+        return posts.stream().map(
+                post -> new PostGetResponseDTO(
+                        post.getTitle(),
+                        post.getContent(),
+                        post.getUser().getName()
+                )
+        ).toList();
+
+    }
+
 
 
 
     private Post findPost(Long id) {
         return postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 게시글이 존재하지 않습니다"));
+                .orElseThrow(() -> new PostHandler(ErrorStatus._POST_NOT_FOUND));
     }
 
     private void createValidate(String title, String content) {

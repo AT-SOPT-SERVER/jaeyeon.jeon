@@ -14,7 +14,8 @@ public enum ErrorStatus {
     _POST_TITLE_LENGTH(HttpStatus.BAD_REQUEST,"POST4003","게시글의 길이는 30자를 넘을 수 없습니다"),
     _POST_TITLE_DUPLICATE(HttpStatus.BAD_REQUEST,"POST4004","게시글의 제목이 중복되었습니다"),
     _POST_CONTENT_LENGTH(HttpStatus.BAD_REQUEST,"POST4005","게시글의 내용은 1000자를 넘을 수 없습니다"),
-    _POST_CREATE_TIMER(HttpStatus.BAD_REQUEST,"POST4005","게시글은 이전 게시글 작성 후 3분 뒤에 작성 할 수 있습니다");
+    _POST_CREATE_TIMER(HttpStatus.BAD_REQUEST,"POST4006","게시글은 이전 게시글 작성 후 3분 뒤에 작성 할 수 있습니다"),
+    _POST_NOT_FOUND(HttpStatus.BAD_REQUEST,"POST4007","게시글을 찾을 수 없습니다");
 
     private HttpStatus httpStatus;
     private String code;
