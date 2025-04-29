@@ -1,10 +1,7 @@
 package or.sopt.assignment.domain;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
@@ -22,15 +19,23 @@ public class Post {
 
     private LocalDateTime createdAt;
 
+    public User getUser() {
+        return user;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
     public String getContent() {
         return content;
     }
 
     // Constructor
-    public Post(String title,String content,LocalDateTime createdAt) {
+    public Post(String title,String content,LocalDateTime createdAt,User user) {
         this.title = title;
         this.createdAt = createdAt;
         this.content = content;
+        this.user = user;
     }
 
     public Post() {

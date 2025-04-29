@@ -31,9 +31,9 @@ public class PostController {
 
     // 게시글 전체 조회
     @GetMapping("/posts")
-    public List<PostGetResponseDTO> getAllPosts() {
+    public ResponseEntity<ResponseDTO<?>> getAllPosts() {
 
-        return postService.getAllPosts();
+        return ApiResponse.ok(SuccessStatus._CREATED_SUCCESS,postService.getAllPosts());
     }
 
     // 게시글 상세 조회

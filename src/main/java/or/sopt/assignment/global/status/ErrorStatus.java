@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 
 public enum ErrorStatus {
 
+    _USER_NOT_FOUND(HttpStatus.NOT_FOUND,"USER4001","회원을 찾을 수 없습니다"),
+
     _POST_TITLE_NOT_NULL(HttpStatus.BAD_REQUEST,"POST4001","게시글의 제목은 필수 입력입니다"),
     _POST_CONTENT_NOT_NULL(HttpStatus.BAD_REQUEST,"POST4002","게시글의 내용은 필수 입력입니다"),
     _POST_TITLE_LENGTH(HttpStatus.BAD_REQUEST,"POST4003","게시글의 길이는 30자를 넘어서는 안됩니다"),
