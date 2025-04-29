@@ -16,9 +16,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void save(UserCreateRequestDTO request) {
+    public Long save(UserCreateRequestDTO request) {
         User user = new User(request.getName(),request.getEmail());
 
         userRepository.save(user);
+
+        return user.getId();
     }
 }

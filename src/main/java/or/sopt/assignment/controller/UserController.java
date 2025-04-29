@@ -1,7 +1,11 @@
 package or.sopt.assignment.controller;
 
 import or.sopt.assignment.dto.UserCreateRequestDTO;
+import or.sopt.assignment.global.reponse.ApiResponse;
+import or.sopt.assignment.global.reponse.ResponseDTO;
+import or.sopt.assignment.global.status.SuccessStatus;
 import or.sopt.assignment.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +19,9 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public String save(@RequestBody UserCreateRequestDTO request) {
-        userService.save(request);
+    public ResponseEntity<ResponseDTO<?>> save(@RequestBody UserCreateRequestDTO request) {
+        Long result = userService.save(request);
 
-        return "저장이 성공적으로 완료되었습니다";
+        return ApiResponse.ok(SuccessStatus._CREATED_SUCCESS,result);
     }
 }
