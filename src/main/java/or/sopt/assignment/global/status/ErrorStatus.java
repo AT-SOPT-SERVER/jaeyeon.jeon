@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 
 public enum ErrorStatus {
 
+    _HEADER_NOT_FOUND(HttpStatus.NOT_FOUND,"HEADER4001","헤더를 찾을 수 없습니다"),
+
     _USER_NOT_FOUND(HttpStatus.NOT_FOUND,"USER4001","회원을 찾을 수 없습니다"),
 
     _POST_TITLE_NOT_NULL(HttpStatus.BAD_REQUEST,"POST4001","게시글의 제목은 필수 입력입니다"),

@@ -68,13 +68,13 @@ public class ApiResponse {
     // 근데 예외사항은 보통 서비스 단에서 잡히기 때문에 이렇게 컨트롤러에서 실패 응답을 보낼 상황이 잘 없지 않을까 하는 생각이...
     public static <T> ResponseEntity<ResponseDTO<?>> fail(ErrorStatus errorStatus) {
         return ResponseEntity
-                .status(200)
+                .status(400)
                 .body(
                         new ResponseDTO<>(
                                 errorStatus.getHttpStatus(),
                                 errorStatus.getCode(),
                                 errorStatus.getMessage(),
-                                true
+                                false
                         )
                 );
     }
