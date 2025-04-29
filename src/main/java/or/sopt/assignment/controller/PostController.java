@@ -39,14 +39,17 @@ public class PostController {
 
     // 게시글 상세 조회
     @GetMapping("/post")
-    public PostGetResponseDTO getPostById(@RequestHeader("id") Long id) {
-        return postService.getPostById(id);
+    public ResponseEntity<ResponseDTO<?>> getPostById(@RequestHeader("id") Long id) {
+        PostGetResponseDTO result = postService.getPostById(id);
+
+        return ApiResponse.ok(SuccessStatus._CREATED_SUCCESS,result);
     }
 
     // 게시글 삭제
     @DeleteMapping("/post")
-    public Boolean deletePostById(@RequestHeader("id") Long id) {
-        return postService.deletePostById(id);
+    public ResponseEntity<ResponseDTO<?>> deletePostById(@RequestHeader("id") Long id) {
+        postService.deletePostById(id);
+        return ApiResponse.ok(SuccessStatus._DELETE_SUCCESS);
     }
 
     // 게시글 수정
@@ -54,7 +57,6 @@ public class PostController {
     public ResponseEntity<ResponseDTO<?>> updatePostTitle(@RequestHeader("id") Long id,
                                    @RequestBody PostUpdateRequestDTO request) {
         Long result = postService.update(id, request);
-
         return ApiResponse.ok(SuccessStatus._CREATED_SUCCESS,result);
     }
 

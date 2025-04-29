@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 public enum SuccessStatus {
 
     _READ_SUCCESS(HttpStatus.OK,"200","정상적으로 조회되었습니다"),
+    _UPDATE_SUCCESS(HttpStatus.OK,"200","정상적으로 수정되었습니다"),
+    _DELETE_SUCCESS(HttpStatus.OK,"200","정상적으로 삭제되었습니다"),
     _CREATED_SUCCESS(HttpStatus.CREATED,"201","정상적으로 생성되었습니다");
 
 

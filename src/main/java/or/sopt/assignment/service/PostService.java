@@ -73,12 +73,10 @@ public class PostService {
                 findPost.getUser().getName());
     }
 
-    public Boolean deletePostById(Long id){
+    public void deletePostById(Long id){
 
         Post post = findPost(id);
         postRepository.delete(post);
-
-        return Boolean.TRUE;
     }
 
     public Long update(Long updateId, PostUpdateRequestDTO postRequestDTO) {
