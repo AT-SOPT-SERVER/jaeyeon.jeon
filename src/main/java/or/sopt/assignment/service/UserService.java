@@ -17,7 +17,7 @@ public class UserService {
     }
 
     public Long save(UserCreateRequestDTO request) {
-        User user = new User(request.getName(),request.getEmail());
+        User user = new User(request.name(),request.email());
 
         userRepository.save(user);
 
