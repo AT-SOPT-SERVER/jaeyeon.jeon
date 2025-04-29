@@ -6,6 +6,7 @@ import or.sopt.assignment.global.ResponseDTO;
 import or.sopt.assignment.global.errorStatus.SuccessStatus;
 import or.sopt.assignment.global.ApiResponse;
 import or.sopt.assignment.service.PostService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,13 @@ public class PostController {
     public ResponseEntity<ResponseDTO<?>> createPost(@RequestBody PostCreateRequestDTO request){
         postService.createPost(request);
 
-        return ApiResponse.ok(SuccessStatus._CREATED_SUCCESS);
+        HttpHeaders responseHeader = new HttpHeaders();
+        responseHeader.add("id","1");
+
+        return ApiResponse.okWithHeader(
+                SuccessStatus._CREATED_SUCCESS,
+                responseHeader
+                );
     }
 
     // 게시글 전체 조회
