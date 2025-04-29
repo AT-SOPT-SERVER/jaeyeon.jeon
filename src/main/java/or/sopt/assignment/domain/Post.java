@@ -17,12 +17,19 @@ public class Post {
 
     private String title;
 
+    private String content;
+
     private LocalDateTime createdAt;
 
+    public String getContent() {
+        return content;
+    }
+
     // Constructor
-    public Post(String title,LocalDateTime createdAt) {
+    public Post(String title,String content,LocalDateTime createdAt) {
         this.title = title;
         this.createdAt = createdAt;
+        this.content = content;
     }
 
     public Post() {
