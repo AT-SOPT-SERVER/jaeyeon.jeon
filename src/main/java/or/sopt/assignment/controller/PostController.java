@@ -37,21 +37,20 @@ public class PostController {
     }
 
     // 게시글 상세 조회
-    @GetMapping("/post/{id}")
-    public PostGetResponseDTO getPostById(@PathVariable Long id) {
-
+    @GetMapping("/post")
+    public PostGetResponseDTO getPostById(@RequestHeader("id") Long id) {
         return postService.getPostById(id);
     }
 
     // 게시글 삭제
-    @DeleteMapping("/post/{id}")
-    public Boolean deletePostById(@PathVariable Long id) {
+    @DeleteMapping("/post")
+    public Boolean deletePostById(@RequestHeader("id") Long id) {
         return postService.deletePostById(id);
     }
 
     // 게시글 수정
-    @PatchMapping("/post/{id}")
-    public Boolean updatePostTitle(@PathVariable Long id,
+    @PatchMapping("/post")
+    public Boolean updatePostTitle(@RequestHeader("id") Long id,
                                                 @RequestParam String newTitle) {
         return postService.update(id,newTitle);
     }
