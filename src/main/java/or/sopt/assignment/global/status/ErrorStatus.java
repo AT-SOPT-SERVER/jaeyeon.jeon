@@ -7,6 +7,7 @@ public enum ErrorStatus {
     _HEADER_NOT_FOUND(HttpStatus.NOT_FOUND,"HEADER4001","헤더를 찾을 수 없습니다"),
 
     _USER_NOT_FOUND(HttpStatus.NOT_FOUND,"USER4001","회원을 찾을 수 없습니다"),
+    _USER_NAME_LENGTH(HttpStatus.BAD_REQUEST,"USER4002","회원의 이름은 10자를 넘을 수 없습니다"),
 
     _POST_TITLE_NOT_NULL(HttpStatus.BAD_REQUEST,"POST4001","게시글의 제목은 필수 입력입니다"),
     _POST_CONTENT_NOT_NULL(HttpStatus.BAD_REQUEST,"POST4002","게시글의 내용은 필수 입력입니다"),
