@@ -1,6 +1,6 @@
-package or.sopt.assignment.global.handler;
+package or.sopt.assignment.global.exception;
 
-import or.sopt.assignment.global.errorStatus.ErrorStatus;
+import or.sopt.assignment.global.status.ErrorStatus;
 
 public class CustomException extends RuntimeException {
 

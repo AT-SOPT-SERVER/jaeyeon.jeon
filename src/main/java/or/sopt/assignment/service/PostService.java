@@ -3,8 +3,6 @@ package or.sopt.assignment.service;
 import or.sopt.assignment.domain.Post;
 import or.sopt.assignment.dto.PostCreateRequestDTO;
 import or.sopt.assignment.dto.PostGetResponseDTO;
-import or.sopt.assignment.global.errorStatus.ErrorStatus;
-import or.sopt.assignment.global.handler.PostHandler;
 import or.sopt.assignment.repository.PostRepository;
 import or.sopt.assignment.util.LocalDateTimeImpl;
 import or.sopt.assignment.validator.PostServiceValidator;

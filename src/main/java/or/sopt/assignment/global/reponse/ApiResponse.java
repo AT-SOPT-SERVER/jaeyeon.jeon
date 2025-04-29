@@ -1,16 +1,11 @@
-package or.sopt.assignment.global;
+package or.sopt.assignment.global.reponse;
 
-import or.sopt.assignment.global.errorStatus.ErrorStatus;
-import or.sopt.assignment.global.errorStatus.SuccessStatus;
+import or.sopt.assignment.global.status.ErrorStatus;
+import or.sopt.assignment.global.status.SuccessStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
 public class ApiResponse {
-
-    /**
-     * 해당 응답에서는 ApIResponse를 응답하는게 아니라 직접 REposneEntity를 응답합니다
-     * 그렇게 함으로써 매번 컨트롤러 return에서 직접 하는게 아니라 SuccessCode와 데이터만 넣으면 알아서 ResponseEntity가 반환되도록 합니디
-     * */
 
     public static <T> ResponseEntity<ResponseDTO<?>> ok(SuccessStatus successStatus, T result) {
         return ResponseEntity

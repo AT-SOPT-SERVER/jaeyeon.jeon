@@ -1,4 +1,4 @@
-package or.sopt.assignment.global.errorStatus;
+package or.sopt.assignment.global.status;
 
 import org.springframework.http.HttpStatus;
 

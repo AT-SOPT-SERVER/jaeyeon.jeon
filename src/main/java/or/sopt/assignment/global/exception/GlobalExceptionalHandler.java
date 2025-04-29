@@ -1,7 +1,6 @@
-package or.sopt.assignment.global;
+package or.sopt.assignment.global.exception;
 
-import or.sopt.assignment.global.errorStatus.ErrorDTO;
-import or.sopt.assignment.global.handler.CustomException;
+import or.sopt.assignment.global.status.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

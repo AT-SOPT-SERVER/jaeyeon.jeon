@@ -1,9 +1,8 @@
-package or.sopt.assignment.global;
+package or.sopt.assignment.global.reponse;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import or.sopt.assignment.global.errorStatus.SuccessStatus;
 import org.springframework.http.HttpStatus;
 
 @JsonPropertyOrder({"isSuccess","httpStatus", "code", "message", "result"})

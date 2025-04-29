@@ -2,9 +2,9 @@ package or.sopt.assignment.controller;
 
 import or.sopt.assignment.dto.PostCreateRequestDTO;
 import or.sopt.assignment.dto.PostGetResponseDTO;
-import or.sopt.assignment.global.ResponseDTO;
-import or.sopt.assignment.global.errorStatus.SuccessStatus;
-import or.sopt.assignment.global.ApiResponse;
+import or.sopt.assignment.global.reponse.ResponseDTO;
+import or.sopt.assignment.global.status.SuccessStatus;
+import or.sopt.assignment.global.reponse.ApiResponse;
 import or.sopt.assignment.service.PostService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
