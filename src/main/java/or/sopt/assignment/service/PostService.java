@@ -27,12 +27,17 @@ public class PostService {
         this.localDateTimeImpl = localDateTimeImpl;
     }
 
-    public void createPost(PostCreateRequestDTO postRequestDTO) {
+    public Long createPost(PostCreateRequestDTO postRequestDTO) {
 
-        createValidate(postRequestDTO.title());
-        Post newPost = new Post(postRequestDTO.title(),localDateTimeImpl.getNow());
+        createValidate(postRequestDTO.title(), postRequestDTO.content());
+
+        Post newPost = new Post(postRequestDTO.title(),
+                postRequestDTO.content(),
+                localDateTimeImpl.getNow());
 
         postRepository.save(newPost);
+
+        return newPost.getId();
     }
 
     public List<PostGetResponseDTO> getAllPosts(){
@@ -89,9 +94,9 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 게시글이 존재하지 않습니다"));
     }
 
-    private void createValidate(String title) {
-
+    private void createValidate(String title, String content) {
         postServiceValidator.validatePostCreationTime();
+        postServiceValidator.contentNotBlankValidate(content);
         postServiceValidator.titleNotBlankValidate(title);
         postServiceValidator.titleLengthValidate(title);
         postServiceValidator.titleDuplicate(title);
