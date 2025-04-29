@@ -55,7 +55,8 @@ public class Post {
         return createdAt;
     }
 
-    public void update(String title){
+    public void update(String title, String content){
         this.title = title;
+        this.content = content;
     }
 }

@@ -2,6 +2,7 @@ package or.sopt.assignment.controller;
 
 import or.sopt.assignment.dto.PostCreateRequestDTO;
 import or.sopt.assignment.dto.PostGetResponseDTO;
+import or.sopt.assignment.dto.PostUpdateRequestDTO;
 import or.sopt.assignment.global.reponse.ResponseDTO;
 import or.sopt.assignment.global.status.SuccessStatus;
 import or.sopt.assignment.global.reponse.ApiResponse;
@@ -50,9 +51,11 @@ public class PostController {
 
     // 게시글 수정
     @PatchMapping("/post")
-    public Boolean updatePostTitle(@RequestHeader("id") Long id,
-                                                @RequestParam String newTitle) {
-        return postService.update(id,newTitle);
+    public ResponseEntity<ResponseDTO<?>> updatePostTitle(@RequestHeader("id") Long id,
+                                   @RequestBody PostUpdateRequestDTO request) {
+        Long result = postService.update(id, request);
+
+        return ApiResponse.ok(SuccessStatus._CREATED_SUCCESS,result);
     }
 
     @GetMapping("/posts/keyword")

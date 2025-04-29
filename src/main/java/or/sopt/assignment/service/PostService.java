@@ -4,6 +4,7 @@ import or.sopt.assignment.domain.Post;
 import or.sopt.assignment.domain.User;
 import or.sopt.assignment.dto.PostCreateRequestDTO;
 import or.sopt.assignment.dto.PostGetResponseDTO;
+import or.sopt.assignment.dto.PostUpdateRequestDTO;
 import or.sopt.assignment.global.exception.handler.UserHandler;
 import or.sopt.assignment.global.status.ErrorStatus;
 import or.sopt.assignment.repository.PostRepository;
@@ -80,16 +81,17 @@ public class PostService {
         return Boolean.TRUE;
     }
 
-    public boolean update(Long updateId, String newTitle) {
+    public Long update(Long updateId, PostUpdateRequestDTO postRequestDTO) {
 
-        postServiceValidator.titleNotBlankValidate(newTitle);
-        postServiceValidator.titleLengthValidate(newTitle);
+        postServiceValidator.titleNotBlankValidate(postRequestDTO.newTitle());
+        postServiceValidator.titleLengthValidate(postRequestDTO.newContent());
 
         Post findPost = findPost(updateId);
 
-        findPost.update(newTitle);
+        findPost.update(postRequestDTO.newTitle(),
+                postRequestDTO.newContent());
 
-        return true;
+       return findPost.getId();
     }
 
     public List<PostGetResponseDTO> searchPostsByKeyword(String keyword) {
