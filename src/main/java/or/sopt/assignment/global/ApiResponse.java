@@ -1,82 +1,56 @@
 package or.sopt.assignment.global;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import or.sopt.assignment.global.errorStatus.ErrorStatus;
 import or.sopt.assignment.global.errorStatus.SuccessStatus;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-@JsonPropertyOrder({"isSuccess","httpStatus", "code", "message", "result"})
-public class ApiResponse<T> {
+public class ApiResponse {
 
-    @JsonProperty("isSuccess")
-    private final boolean isSuccess;
-    private final HttpStatus httpStatus;
-    private final String code;
-    private final String message;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private T result;
+    /**
+     * 해당 응답에서는 ApIResponse를 응답하는게 아니라 직접 REposneEntity를 응답합니다
+     * 그렇게 함으로써 매번 컨트롤러 return에서 직접 하는게 아니라 SuccessCode와 데이터만 넣으면 알아서 ResponseEntity가 반환되도록 합니디
+     * */
 
-    public ApiResponse(HttpStatus httpStatus, String code, String message, Boolean isSuccess, T result) {
-        this.httpStatus = httpStatus;
-        this.code = code;
-        this.message = message;
-        this.isSuccess = isSuccess;
-        this.result = result;
+    public static <T> ResponseEntity<ResponseDTO<?>> ok(SuccessStatus successStatus, T result) {
+        return ResponseEntity
+                .status(200)
+                .body(
+                        new ResponseDTO<>(
+                                successStatus.getHttpStatus(),
+                                successStatus.getCode(),
+                                successStatus.getMessage(),
+                                true,
+                                result
+                        )
+                );
     }
 
-    public ApiResponse(HttpStatus httpStatus, String code, String message, Boolean isSuccess) {
-        this.httpStatus = httpStatus;
-        this.code = code;
-        this.message = message;
-        this.isSuccess = isSuccess;
+    public static <T> ResponseEntity<ResponseDTO<?>> ok(SuccessStatus successStatus) {
+        return ResponseEntity
+                .status(200)
+                .body(
+                        new ResponseDTO<>(
+                                successStatus.getHttpStatus(),
+                                successStatus.getCode(),
+                                successStatus.getMessage(),
+                                true
+                        )
+                );
     }
 
-    public static  <T> ApiResponse<T> onSuccess(SuccessStatus successStatus, T result){
-        return new ApiResponse<>(
-                successStatus.getHttpStatus(),
-                successStatus.getCode(),
-                successStatus.getMessage(),
-                true,
-                result
-        );
+    // 근데 예외사항은 보통 서비스 단에서 잡히기 때문에 이렇게 컨트롤러에서 실패 응답을 보낼 상황이 잘 없지 않을까 하는 생각이...
+    public static <T> ResponseEntity<ResponseDTO<?>> fail(ErrorStatus errorStatus) {
+        return ResponseEntity
+                .status(200)
+                .body(
+                        new ResponseDTO<>(
+                                errorStatus.getHttpStatus(),
+                                errorStatus.getCode(),
+                                errorStatus.getMessage(),
+                                true
+                        )
+                );
     }
 
-    public static  <T> ApiResponse<T> onSuccess(SuccessStatus successStatus){
-        return new ApiResponse<>(
-                successStatus.getHttpStatus(),
-                successStatus.getCode(),
-                successStatus.getMessage(),
-                true
-        );
-    }
 
-    public static  <T> ApiResponse<T> onFailure(T result){
-        return new ApiResponse<>(
-                HttpStatus.BAD_GATEWAY,
-                "COMMON500",
-                "서버문제가 발생하였습니다. 개발자에게 문의 주세요",
-                false
-        );
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public Boolean getIsSuccess() {
-        return isSuccess;
-    }
-
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public T getResult() {
-        return result;
-    }
 }

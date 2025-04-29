@@ -1,10 +1,10 @@
 package or.sopt.assignment.controller;
 
-import or.sopt.assignment.domain.Post;
 import or.sopt.assignment.dto.PostCreateRequestDTO;
 import or.sopt.assignment.dto.PostGetResponseDTO;
-import or.sopt.assignment.global.ApiResponse;
+import or.sopt.assignment.global.ResponseDTO;
 import or.sopt.assignment.global.errorStatus.SuccessStatus;
+import or.sopt.assignment.global.ApiResponse;
 import or.sopt.assignment.service.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +22,10 @@ public class PostController {
 
     // 게시글 생성 - 단일 객체를 저장하니까 s를 붙이지 않는다, 난 명사는 무조건 복수형인줄 알았는데 그게 아니구나
     @PostMapping("/post")
-    public ApiResponse<SuccessStatus> createPost(@RequestBody PostCreateRequestDTO request){
+    public ResponseEntity<ResponseDTO<?>> createPost(@RequestBody PostCreateRequestDTO request){
         postService.createPost(request);
 
-        return ApiResponse.onSuccess(SuccessStatus._CREATED_SUCCESS);
+        return ApiResponse.ok(SuccessStatus._CREATED_SUCCESS);
     }
 
     // 게시글 전체 조회
