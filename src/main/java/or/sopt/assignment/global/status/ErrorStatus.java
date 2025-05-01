@@ -4,6 +4,15 @@ import org.springframework.http.HttpStatus;
 
 public enum ErrorStatus {
 
+    /**
+     * 제가 생각한 에러코드를 작성하는 좋은 방법은
+     * 예외의 주체 도메인 + HTTP CODE(200,300,400,500) + index 라고 생각했습니다!
+     *
+     * 더 좋은 방법이 있으면 말씀해주세요
+     *
+     * 그리고 추가로 지금 ErrorStatus를 작성할때도 이름을 (도메인_예외 내용요약) 이렇게 구성하고 있는데 이것도 정확한 규칙없이 하는 느낌이라
+     * 좋은 방법있으면 말씀해주세요
+     * */
     _HEADER_NOT_FOUND(HttpStatus.NOT_FOUND,"HEADER4001","헤더를 찾을 수 없습니다"),
 
     _USER_NOT_FOUND(HttpStatus.NOT_FOUND,"USER4001","회원을 찾을 수 없습니다"),
