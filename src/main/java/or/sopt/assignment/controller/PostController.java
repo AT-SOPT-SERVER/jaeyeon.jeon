@@ -1,10 +1,13 @@
 package or.sopt.assignment.controller;
 
-import or.sopt.assignment.apiPayLoad.ApiResponse;
-import or.sopt.assignment.domain.Post;
 import or.sopt.assignment.dto.PostCreateRequestDTO;
 import or.sopt.assignment.dto.PostGetResponseDTO;
+import or.sopt.assignment.dto.PostUpdateRequestDTO;
+import or.sopt.assignment.global.reponse.ResponseDTO;
+import or.sopt.assignment.global.status.SuccessStatus;
+import or.sopt.assignment.global.reponse.ApiResponse;
 import or.sopt.assignment.service.PostService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,45 +24,59 @@ public class PostController {
 
     // 게시글 생성 - 단일 객체를 저장하니까 s를 붙이지 않는다, 난 명사는 무조건 복수형인줄 알았는데 그게 아니구나
     @PostMapping("/post")
-    public ApiResponse<String> createPost(@RequestBody PostCreateRequestDTO request){
-        postService.createPost(request);
+    public ResponseEntity<ResponseDTO<?>> createPost(@RequestBody PostCreateRequestDTO request){
+        Long result = postService.createPost(request);
 
-        return ApiResponse.onSuccess("게시글이 성공적으로 등록되었습니다");
+        return ApiResponse.ok(SuccessStatus._CREATED_SUCCESS,result);
     }
 
     // 게시글 전체 조회
     @GetMapping("/posts")
-    public ApiResponse<List<PostGetResponseDTO>> getAllPosts() {
-        List<PostGetResponseDTO> result = postService.getAllPosts();
+    public ResponseEntity<ResponseDTO<?>> getAllPosts() {
 
-        return ApiResponse.onSuccess(result);
+        return ApiResponse.ok(SuccessStatus._READ_SUCCESS,postService.getAllPosts());
     }
 
     // 게시글 상세 조회
-    @GetMapping("/post/{id}")
-    public ApiResponse<PostGetResponseDTO> getPostById(@PathVariable Long id) {
+    @GetMapping("/post")
+    public ResponseEntity<ResponseDTO<?>> getPostById(@RequestHeader("id") Long id) {
         PostGetResponseDTO result = postService.getPostById(id);
 
-        return ApiResponse.onSuccess(result);
+        return ApiResponse.ok(SuccessStatus._CREATED_SUCCESS,result);
     }
 
     // 게시글 삭제
-    @DeleteMapping("/post/{id}")
-    public ApiResponse<Boolean> deletePostById(@PathVariable Long id) {
-        return ApiResponse.onSuccess(postService.deletePostById(id));
+    @DeleteMapping("/post")
+    public ResponseEntity<ResponseDTO<?>> deletePostById(@RequestHeader("id") Long id) {
+        postService.deletePostById(id);
+        return ApiResponse.ok(SuccessStatus._DELETE_SUCCESS);
     }
 
     // 게시글 수정
-    @PatchMapping("/post/{id}")
-    public ApiResponse<Boolean> updatePostTitle(@PathVariable Long id,
-                                                @RequestParam String newTitle) {
-        return ApiResponse.onSuccess(postService.update(id,newTitle));
+    @PatchMapping("/post")
+    public ResponseEntity<ResponseDTO<?>> updatePostTitle(@RequestHeader("id") Long id,
+                                   @RequestBody PostUpdateRequestDTO request) {
+        Long result = postService.update(id, request);
+        return ApiResponse.ok(SuccessStatus._CREATED_SUCCESS,result);
     }
 
     @GetMapping("/posts/keyword")
-    public ApiResponse<List<PostGetResponseDTO>> searchPostsByKeyword(@RequestParam String keyword) {
-        List<PostGetResponseDTO> result = postService.searchPostsByKeyword(keyword);
+    public ResponseEntity<ResponseDTO<?>> searchPostsByKeyword(@RequestParam String keyword) {
 
-        return ApiResponse.onSuccess(result);
+        return ApiResponse.ok(SuccessStatus._READ_SUCCESS,postService.searchPostsByKeyword(keyword));
+    }
+
+    @GetMapping("/posts/user-name")
+    public ResponseEntity<ResponseDTO<?>> searchPostsByUserName(@RequestParam String userName) {
+        List<PostGetResponseDTO> result = postService.searchByUserName(userName);
+
+        return ApiResponse.ok(SuccessStatus._READ_SUCCESS,result);
+    }
+
+    @GetMapping("/posts/tags")
+    public ResponseEntity<ResponseDTO<?>> searchPostsByTag(@RequestParam String tags) {
+        List<PostGetResponseDTO> result = postService.searchByTags(tags);
+
+        return ApiResponse.ok(SuccessStatus._READ_SUCCESS,result);
     }
 }

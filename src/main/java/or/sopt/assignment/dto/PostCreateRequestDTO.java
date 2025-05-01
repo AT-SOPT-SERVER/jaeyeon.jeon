@@ -1,4 +1,6 @@
 package or.sopt.assignment.dto;
 
-public record PostCreateRequestDTO(String title) {
+import java.util.List;
+
+public record PostCreateRequestDTO(String title, String content, Long userId, String tags) {
 }
