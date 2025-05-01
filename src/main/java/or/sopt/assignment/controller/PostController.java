@@ -61,9 +61,9 @@ public class PostController {
     }
 
     @GetMapping("/posts/keyword")
-    public List<PostGetResponseDTO> searchPostsByKeyword(@RequestParam String keyword) {
+    public ResponseEntity<ResponseDTO<?>> searchPostsByKeyword(@RequestParam String keyword) {
 
-        return postService.searchPostsByKeyword(keyword);
+        return ApiResponse.ok(SuccessStatus._READ_SUCCESS,postService.searchPostsByKeyword(keyword));
     }
 
     @GetMapping("/posts/user-name")
