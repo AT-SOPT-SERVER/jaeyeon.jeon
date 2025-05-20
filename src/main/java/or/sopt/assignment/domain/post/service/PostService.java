@@ -8,11 +8,12 @@ import or.sopt.assignment.domain.post.controller.dto.PostUpdateRequestDTO;
 import or.sopt.assignment.domain.post.entity.Post;
 import or.sopt.assignment.domain.post.repository.PostRepository;
 import or.sopt.assignment.domain.user.entity.User;
+import or.sopt.assignment.domain.util.LocalDateTime;
 import or.sopt.assignment.global.exception.handler.PostHandler;
 import or.sopt.assignment.global.exception.handler.UserHandler;
 import or.sopt.assignment.global.status.ErrorStatus;
 import or.sopt.assignment.domain.user.repository.UserRepository;
-import or.sopt.assignment.global.util.LocalDateTimeImpl;
+import or.sopt.assignment.domain.util.LocalDateTimeImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +25,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final PostServiceValidator postServiceValidator;
-    private final LocalDateTimeImpl localDateTimeImpl;
+    private final LocalDateTime localDateTimeImpl;
 
     private final UserRepository userRepository;
 
