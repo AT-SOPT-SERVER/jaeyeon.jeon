@@ -1,4 +1,4 @@
-package or.sopt.assignment.util;
+package or.sopt.assignment.global.util;
 
 import org.springframework.stereotype.Component;
 

@@ -1,13 +1,12 @@
-package or.sopt.assignment.controller;
+package or.sopt.assignment.domain.post.controller;
 
-import or.sopt.assignment.dto.PostCreateRequestDTO;
-import or.sopt.assignment.dto.PostGetResponseDTO;
-import or.sopt.assignment.dto.PostUpdateRequestDTO;
+import or.sopt.assignment.domain.post.controller.dto.PostCreateRequestDTO;
+import or.sopt.assignment.domain.post.controller.dto.PostGetResponseDTO;
+import or.sopt.assignment.domain.post.service.PostService;
+import or.sopt.assignment.domain.post.controller.dto.PostUpdateRequestDTO;
 import or.sopt.assignment.global.reponse.ResponseDTO;
 import or.sopt.assignment.global.status.SuccessStatus;
 import or.sopt.assignment.global.reponse.ApiResponse;
-import or.sopt.assignment.service.PostService;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

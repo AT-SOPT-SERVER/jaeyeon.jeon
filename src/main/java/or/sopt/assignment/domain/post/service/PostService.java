@@ -1,18 +1,18 @@
-package or.sopt.assignment.service;
+package or.sopt.assignment.domain.post.service;
 
-import or.sopt.assignment.domain.Post;
-import or.sopt.assignment.domain.Tags;
-import or.sopt.assignment.domain.User;
-import or.sopt.assignment.dto.PostCreateRequestDTO;
-import or.sopt.assignment.dto.PostGetResponseDTO;
-import or.sopt.assignment.dto.PostUpdateRequestDTO;
+import or.sopt.assignment.domain.post.validator.PostServiceValidator;
+import or.sopt.assignment.domain.post.entity.Enum.Tags;
+import or.sopt.assignment.domain.post.controller.dto.PostCreateRequestDTO;
+import or.sopt.assignment.domain.post.controller.dto.PostGetResponseDTO;
+import or.sopt.assignment.domain.post.controller.dto.PostUpdateRequestDTO;
+import or.sopt.assignment.domain.post.entity.Post;
+import or.sopt.assignment.domain.post.repository.PostRepository;
+import or.sopt.assignment.domain.user.entity.User;
 import or.sopt.assignment.global.exception.handler.PostHandler;
 import or.sopt.assignment.global.exception.handler.UserHandler;
 import or.sopt.assignment.global.status.ErrorStatus;
-import or.sopt.assignment.repository.PostRepository;
-import or.sopt.assignment.repository.UserRepository;
-import or.sopt.assignment.util.LocalDateTimeImpl;
-import or.sopt.assignment.validator.PostServiceValidator;
+import or.sopt.assignment.domain.user.repository.UserRepository;
+import or.sopt.assignment.global.util.LocalDateTimeImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,14 +1,10 @@
-package or.sopt.assignment.validator;
+package or.sopt.assignment.domain.post.validator;
 
-import or.sopt.assignment.domain.Post;
+import or.sopt.assignment.domain.post.repository.PostRepository;
 import or.sopt.assignment.global.exception.handler.PostHandler;
 import or.sopt.assignment.global.status.ErrorStatus;
-import or.sopt.assignment.repository.PostRepository;
-import or.sopt.assignment.util.LocalDateTimeImpl;
+import or.sopt.assignment.global.util.LocalDateTimeImpl;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Component
 public class PostServiceValidator {

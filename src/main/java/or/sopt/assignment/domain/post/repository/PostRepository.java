@@ -1,7 +1,7 @@
-package or.sopt.assignment.repository;
+package or.sopt.assignment.domain.post.repository;
 
-import or.sopt.assignment.domain.Post;
-import or.sopt.assignment.domain.Tags;
+import or.sopt.assignment.domain.post.entity.Enum.Tags;
+import or.sopt.assignment.domain.post.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

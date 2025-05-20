@@ -1,6 +1,6 @@
-package or.sopt.assignment.repository;
+package or.sopt.assignment.domain.user.repository;
 
-import or.sopt.assignment.domain.User;
+import or.sopt.assignment.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

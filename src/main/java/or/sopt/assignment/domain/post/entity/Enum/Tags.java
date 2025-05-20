@@ -1,4 +1,4 @@
-package or.sopt.assignment.domain;
+package or.sopt.assignment.domain.post.entity.Enum;
 
 public enum Tags {
 

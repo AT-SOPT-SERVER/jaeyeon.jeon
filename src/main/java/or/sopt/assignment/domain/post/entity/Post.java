@@ -1,8 +1,9 @@
-package or.sopt.assignment.domain;
+package or.sopt.assignment.domain.post.entity;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import or.sopt.assignment.domain.post.entity.Enum.Tags;
+import or.sopt.assignment.domain.user.entity.User;
 
 import java.time.LocalDateTime;
 

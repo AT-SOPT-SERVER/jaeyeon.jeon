@@ -1,4 +1,4 @@
-package or.sopt.assignment.util;
+package or.sopt.assignment.global.util;
 
 public class IdGenerator {
 

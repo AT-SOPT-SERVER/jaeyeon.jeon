@@ -1,9 +1,9 @@
-package or.sopt.assignment.service;
+package or.sopt.assignment.domain.user.service;
 
-import or.sopt.assignment.domain.User;
-import or.sopt.assignment.dto.UserCreateRequestDTO;
-import or.sopt.assignment.repository.UserRepository;
-import or.sopt.assignment.validator.UserServiceValidator;
+import or.sopt.assignment.domain.user.validator.UserServiceValidator;
+import or.sopt.assignment.domain.user.controller.dto.UserCreateRequestDTO;
+import or.sopt.assignment.domain.user.entity.User;
+import or.sopt.assignment.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
