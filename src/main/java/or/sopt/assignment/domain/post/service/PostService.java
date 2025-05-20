@@ -1,5 +1,6 @@
 package or.sopt.assignment.domain.post.service;
 
+import lombok.RequiredArgsConstructor;
 import or.sopt.assignment.domain.post.validator.PostServiceValidator;
 import or.sopt.assignment.domain.post.entity.Enum.Tags;
 import or.sopt.assignment.domain.post.controller.dto.PostCreateRequestDTO;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 @Transactional
 public class PostService {
 
@@ -29,16 +31,6 @@ public class PostService {
 
     private final UserRepository userRepository;
 
-    public PostService(PostRepository postRepository,
-                       PostServiceValidator postServiceValidator,
-                       LocalDateTimeImpl localDateTimeImpl,
-                       UserRepository userRepository) {
-
-        this.postRepository = postRepository;
-        this.postServiceValidator = postServiceValidator;
-        this.localDateTimeImpl = localDateTimeImpl;
-        this.userRepository = userRepository;
-    }
 
     public Long createPost(PostCreateRequestDTO postRequestDTO) {
 

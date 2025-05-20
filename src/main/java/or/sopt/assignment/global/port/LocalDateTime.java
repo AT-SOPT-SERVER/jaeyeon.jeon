@@ -1,4 +1,4 @@
-package or.sopt.assignment.domain.util;
+package or.sopt.assignment.global.port;
 
 public interface LocalDateTime {
 

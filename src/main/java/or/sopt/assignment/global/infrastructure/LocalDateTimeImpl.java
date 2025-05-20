@@ -1,11 +1,11 @@
-package or.sopt.assignment.domain.util;
+package or.sopt.assignment.global.infrastructure;
 
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Component
-public class LocalDateTimeImpl implements or.sopt.assignment.domain.util.LocalDateTime {
+public class LocalDateTimeImpl implements or.sopt.assignment.global.port.LocalDateTime {
 
     @Override
     public LocalDateTime getNow() {

@@ -1,5 +1,6 @@
 package or.sopt.assignment.domain.user.service;
 
+import lombok.RequiredArgsConstructor;
 import or.sopt.assignment.domain.user.validator.UserServiceValidator;
 import or.sopt.assignment.domain.user.controller.dto.UserCreateRequestDTO;
 import or.sopt.assignment.domain.user.entity.User;
@@ -9,17 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final UserServiceValidator userServiceValidator;
-
-    public UserService(UserRepository userRepository,
-                       UserServiceValidator userServiceValidator) {
-
-        this.userRepository = userRepository;
-        this.userServiceValidator = userServiceValidator;
-    }
 
     public Long save(UserCreateRequestDTO request) {
 
