@@ -2,8 +2,8 @@ package or.sopt.assignment.domain.post.validator;
 
 import or.sopt.assignment.domain.post.repository.PostRepository;
 import or.sopt.assignment.global.exception.handler.PostHandler;
+import or.sopt.assignment.global.infrastructure.LocalDateTimeImpl;
 import or.sopt.assignment.global.status.ErrorStatus;
-import or.sopt.assignment.domain.util.LocalDateTimeImpl;
 import org.springframework.stereotype.Component;
 
 @Component
