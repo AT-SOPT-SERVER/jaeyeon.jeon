@@ -2,6 +2,7 @@ package or.sopt.assignment.domain.user.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import or.sopt.assignment.domain.user.controller.dto.UserCreateRequestDTO;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -17,5 +18,14 @@ public class User {
     private String name;
 
     private String email;
+
+
+    public static User of(UserCreateRequestDTO request) {
+
+        return User.builder()
+                .name(request.name())
+                .email(request.email())
+                .build();
+    }
 
 }

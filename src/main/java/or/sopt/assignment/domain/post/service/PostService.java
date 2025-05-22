@@ -43,11 +43,7 @@ public class PostService {
             throw new PostHandler(ErrorStatus._POST_TAG_NOT_FOUND);
         }
 
-        Post newPost = new Post(postRequestDTO.title(),
-                postRequestDTO.content(),
-                localDateTimeImpl.getNow(),
-                findUser,
-                postTags);
+        Post newPost = Post.of(postRequestDTO, localDateTimeImpl, findUser, postTags);
 
         postRepository.save(newPost);
 

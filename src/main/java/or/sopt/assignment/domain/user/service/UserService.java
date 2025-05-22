@@ -20,7 +20,8 @@ public class UserService {
 
         userServiceValidator.userNameLengthValidation(request.name());
 
-        User user = new User(request.name(),request.email());
+        User user = User.of(request);
+
         userRepository.save(user);
 
         return user.getId();

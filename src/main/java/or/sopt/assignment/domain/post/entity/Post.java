@@ -3,6 +3,7 @@ package or.sopt.assignment.domain.post.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import or.sopt.assignment.domain.post.controller.dto.PostCreateRequestDTO;
 import or.sopt.assignment.domain.post.entity.Enum.Tags;
 import or.sopt.assignment.domain.user.entity.User;
 
@@ -35,5 +36,19 @@ public class Post {
     public void update(String title, String content){
         this.title = title;
         this.content = content;
+    }
+
+
+    public static Post of(PostCreateRequestDTO postRequestDTO,
+                   or.sopt.assignment.global.port.LocalDateTime localDateTime,
+                   User user,
+                   Tags tags){
+
+        return Post.builder()
+                .title(postRequestDTO.title())
+                .createdAt(localDateTime.getNow())
+                .user(user)
+                .tags(tags)
+                .build();
     }
 }
