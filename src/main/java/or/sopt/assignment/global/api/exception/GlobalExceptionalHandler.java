@@ -1,9 +1,8 @@
-package or.sopt.assignment.global.exception;
+package or.sopt.assignment.global.api.exception;
 
 import or.sopt.assignment.global.api.reponse.ApiResponse;
-import or.sopt.assignment.global.api.status.CommonErrorStatus;
-import or.sopt.assignment.global.api.status.ErrorDTO;
-import or.sopt.assignment.global.api.status.ErrorStatus;
+import or.sopt.assignment.global.api.exception.status.CommonErrorStatus;
+import or.sopt.assignment.global.api.exception.status.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingRequestHeaderException;

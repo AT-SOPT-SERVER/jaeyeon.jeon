@@ -1,9 +1,9 @@
 package or.sopt.assignment.domain.post.validator;
 
 import or.sopt.assignment.domain.post.repository.PostRepository;
-import or.sopt.assignment.global.exception.handler.PostHandler;
+import or.sopt.assignment.global.api.exception.handler.PostHandler;
 import or.sopt.assignment.global.infrastructure.LocalDateTimeImpl;
-import or.sopt.assignment.global.api.status.CommonErrorStatus;
+import or.sopt.assignment.global.api.exception.status.CommonErrorStatus;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,4 +1,4 @@
-package or.sopt.assignment.global.api.status;
+package or.sopt.assignment.global.api.exception.status;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

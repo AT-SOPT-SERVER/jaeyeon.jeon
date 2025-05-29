@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 @Component
-public class LocalDateTimeImpl implements or.sopt.assignment.global.port.LocalDateTime {
+public class LocalDateTimeImpl implements or.sopt.assignment.global.infrastructure.LocalDateTime {
 
     @Override
     public LocalDateTime getNow() {

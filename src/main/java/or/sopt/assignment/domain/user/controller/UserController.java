@@ -4,7 +4,7 @@ import or.sopt.assignment.domain.user.controller.dto.UserCreateRequestDTO;
 import or.sopt.assignment.domain.user.service.UserService;
 import or.sopt.assignment.global.api.reponse.ApiResponse;
 import or.sopt.assignment.global.api.reponse.ResponseDTO;
-import or.sopt.assignment.global.api.status.SuccessStatus;
+import or.sopt.assignment.global.api.exception.status.SuccessStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

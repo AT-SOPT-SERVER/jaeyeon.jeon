@@ -1,4 +1,4 @@
-package or.sopt.assignment.global.jwt;
+package or.sopt.assignment.global.auth.jwt;
 
 
 
@@ -11,9 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import or.sopt.assignment.domain.user.entity.Role;
 import or.sopt.assignment.domain.user.entity.User;
+import or.sopt.assignment.global.auth.jwt.exception.TokenErrorStatus;
+import or.sopt.assignment.global.auth.jwt.exception.TokenHandler;
 import or.sopt.assignment.global.config.JWTConfig;
-import or.sopt.assignment.global.jwt.exception.TokenErrorStatus;
-import or.sopt.assignment.global.jwt.exception.TokenHandler;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;

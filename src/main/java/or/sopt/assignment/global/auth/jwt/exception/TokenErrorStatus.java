@@ -1,7 +1,7 @@
-package or.sopt.assignment.global.jwt.exception;
+package or.sopt.assignment.global.auth.jwt.exception;
 
 import lombok.Getter;
-import or.sopt.assignment.global.api.status.ErrorStatus;
+import or.sopt.assignment.global.api.exception.status.ErrorStatus;
 import org.springframework.http.HttpStatus;
 
 @Getter

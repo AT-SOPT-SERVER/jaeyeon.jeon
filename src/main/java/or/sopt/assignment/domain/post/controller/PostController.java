@@ -5,7 +5,7 @@ import or.sopt.assignment.domain.post.controller.dto.PostGetResponseDTO;
 import or.sopt.assignment.domain.post.service.PostService;
 import or.sopt.assignment.domain.post.controller.dto.PostUpdateRequestDTO;
 import or.sopt.assignment.global.api.reponse.ResponseDTO;
-import or.sopt.assignment.global.api.status.SuccessStatus;
+import or.sopt.assignment.global.api.exception.status.SuccessStatus;
 import or.sopt.assignment.global.api.reponse.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
