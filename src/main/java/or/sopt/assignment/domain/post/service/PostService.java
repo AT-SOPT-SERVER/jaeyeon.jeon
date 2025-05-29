@@ -12,7 +12,7 @@ import or.sopt.assignment.domain.user.entity.User;
 import or.sopt.assignment.global.exception.handler.PostHandler;
 import or.sopt.assignment.global.exception.handler.UserHandler;
 import or.sopt.assignment.global.port.LocalDateTime;
-import or.sopt.assignment.global.status.ErrorStatus;
+import or.sopt.assignment.global.api.status.ErrorStatus;
 import or.sopt.assignment.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

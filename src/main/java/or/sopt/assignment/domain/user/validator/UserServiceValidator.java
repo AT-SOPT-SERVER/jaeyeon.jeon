@@ -1,7 +1,7 @@
 package or.sopt.assignment.domain.user.validator;
 
 import or.sopt.assignment.global.exception.handler.UserHandler;
-import or.sopt.assignment.global.status.ErrorStatus;
+import or.sopt.assignment.global.api.status.ErrorStatus;
 import org.springframework.stereotype.Component;
 
 @Component

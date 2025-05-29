@@ -1,4 +1,4 @@
-package or.sopt.assignment.global.status;
+package or.sopt.assignment.global.api.status;
 
 import org.springframework.http.HttpStatus;
 
