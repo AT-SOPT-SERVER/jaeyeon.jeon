@@ -4,6 +4,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import or.sopt.assignment.domain.user.entity.Role;
 import or.sopt.assignment.domain.user.entity.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -84,7 +85,7 @@ public class AuthController {
 
         if (userId.equals("userSopt") && password.equals("sopt1234")) {
             HttpSession session = request.getSession(true);
-            session.setAttribute("user", new User(1L,"sopt","sopt@naver.com"));
+            session.setAttribute("user", new User(1L,"sopt","sopt@naver.com", Role.ROLE_USER));
 
             return ResponseEntity.ok("세션 저장 완료");
         }
