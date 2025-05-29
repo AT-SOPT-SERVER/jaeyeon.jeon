@@ -1,4 +1,4 @@
-package or.sopt.assignment.global.auth.jwt.dto;
+package or.sopt.assignment.global.auth.dto;
 
 
 import lombok.Getter;

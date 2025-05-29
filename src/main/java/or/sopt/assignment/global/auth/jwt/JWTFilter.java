@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import or.sopt.assignment.domain.user.entity.Role;
 import or.sopt.assignment.domain.user.entity.User;
-import or.sopt.assignment.global.auth.jwt.dto.CustomUserDetails;
+import or.sopt.assignment.global.auth.dto.CustomUserDetails;
 import or.sopt.assignment.global.auth.jwt.exception.TokenErrorStatus;
 import or.sopt.assignment.global.auth.jwt.exception.TokenHandler;
 import or.sopt.assignment.global.config.JWTConfig;
