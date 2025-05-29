@@ -85,7 +85,7 @@ public class AuthController {
 
         if (userId.equals("userSopt") && password.equals("sopt1234")) {
             HttpSession session = request.getSession(true);
-            session.setAttribute("user", new User(1L,"sopt","sopt@naver.com", Role.ROLE_USER));
+            session.setAttribute("user", new User(1L,password,"sopt","sopt@naver.com", Role.ROLE_USER));
 
             return ResponseEntity.ok("세션 저장 완료");
         }

@@ -11,9 +11,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import or.sopt.assignment.domain.user.entity.Role;
 import or.sopt.assignment.domain.user.entity.User;
+import or.sopt.assignment.global.auth.jwt.dto.CustomUserDetails;
 import or.sopt.assignment.global.auth.jwt.exception.TokenErrorStatus;
 import or.sopt.assignment.global.auth.jwt.exception.TokenHandler;
 import or.sopt.assignment.global.config.JWTConfig;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -78,14 +82,18 @@ public class JWTFilter extends OncePerRequestFilter{
                 .role(role)
                 .build();
 
-        /*//UserDetails에 회원 정보 객체 담기 -> 스프링 시큐리티 도입 시, 구현
-        CustomUserDetails customUserDetails = new CustomUserDetails(member);
+        /**
+         * UserDetails에 회원 정보 객체 담아서 요청에 회원정보가 필요한 경우 가져다 쓴다
+         *
+         *  해당 객체의 생명주기는 한 요청이기 때문에 세션유지와는 차이가 존재한다
+         * */
+        CustomUserDetails customUserDetails = new CustomUserDetails(user);
 
         //스프링 시큐리티 인증 토큰 생성
         Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
         //세션에 사용자 등록
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
-        filterChain.doFilter(request, response);*/
+        filterChain.doFilter(request, response);
     }
 }
