@@ -24,6 +24,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType;
+
 
     public static User of(UserCreateRequestDTO request) {
 

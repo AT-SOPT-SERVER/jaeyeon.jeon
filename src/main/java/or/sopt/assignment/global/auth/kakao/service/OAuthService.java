@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import or.sopt.assignment.domain.user.entity.Role;
+import or.sopt.assignment.domain.user.entity.SocialType;
 import or.sopt.assignment.domain.user.entity.User;
 import or.sopt.assignment.domain.user.repository.UserRepository;
 import or.sopt.assignment.global.auth.dto.KaKaoUserInfoResponse;
@@ -81,6 +82,7 @@ public class OAuthService {
                     .password(bCryptPasswordEncoder.encode("kakaoPassword"))
                     .email(userInfo.getKakao_account().getEmail())
                     .role(Role.ROLE_USER)
+                    .socialType(SocialType.KAKAO)
                     .build();
 
             userRepository.save(newUser);
