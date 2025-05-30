@@ -1,7 +1,8 @@
-package or.sopt.assignment.domain.post.entity;
+package or.sopt.assignment.domain.comment.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import or.sopt.assignment.domain.post.entity.Post;
 import or.sopt.assignment.domain.user.entity.User;
 
 @Entity

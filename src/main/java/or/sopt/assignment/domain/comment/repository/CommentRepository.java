@@ -1,6 +1,6 @@
-package or.sopt.assignment.domain.post.repository;
+package or.sopt.assignment.domain.comment.repository;
 
-import or.sopt.assignment.domain.post.entity.Comment;
+import or.sopt.assignment.domain.comment.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
