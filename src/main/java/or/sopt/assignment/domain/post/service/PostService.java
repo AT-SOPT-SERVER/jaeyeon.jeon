@@ -11,7 +11,7 @@ import or.sopt.assignment.domain.post.repository.PostRepository;
 import or.sopt.assignment.domain.user.entity.User;
 import or.sopt.assignment.global.api.exception.status.CommonErrorStatus;
 import or.sopt.assignment.global.api.exception.handler.PostHandler;
-import or.sopt.assignment.global.api.exception.handler.UserHandler;
+import or.sopt.assignment.domain.user.exception.UserHandler;
 import or.sopt.assignment.global.infrastructure.LocalDateTime;
 import or.sopt.assignment.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Service;

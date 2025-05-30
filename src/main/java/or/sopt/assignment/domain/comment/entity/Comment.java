@@ -23,4 +23,12 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    public static Comment of(String content, Post post, User user) {
+        return Comment.builder()
+                .content(content)
+                .post(post)
+                .user(user)
+                .build();
+    }
 }
