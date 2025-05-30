@@ -107,7 +107,7 @@ public class OAuthService {
          *      등 해결할게 너무 많아보여서,.. 회원은 이정도로 마무리 하겠습니다
          * */
         String access = jwtUtil.createJwt("access", byEmail.getId(), byEmail.getRole().toString(), jwtConfig.getAccessTokenValidityInSeconds());
-        response.setHeader("access", access);
+        response.setHeader("access-token", access);
     }
 
 
