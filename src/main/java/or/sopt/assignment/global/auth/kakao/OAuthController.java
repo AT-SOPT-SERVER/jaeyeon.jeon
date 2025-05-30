@@ -35,7 +35,7 @@ public class OAuthController {
             "해당 코드를 이용해서 사용자 정보를 파싱하고 **액세스 토큰과 리프레시 토큰을 모두 쿠키에 담아** 반환합니다" +
             "클라이언트 단에서 다시 한 번 서버로 요청을 주시면 쿠키에 담겨있는 액세스토큰을 헤더로 옮겨 드립니다")
     @GetMapping("/oauth/kakao/callback")
-    public void kakaoLogin(@RequestParam("code") String accessCode) {
-        oAuthService.kakaoLogin(accessCode);
+    public void kakaoLogin(@RequestParam("code") String accessCode, HttpServletResponse response) {
+        oAuthService.kakaoLogin(accessCode,response);
     }
 }
