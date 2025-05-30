@@ -14,6 +14,7 @@ import or.sopt.assignment.global.auth.kakao.client.KaKaoOAuthClient;
 import or.sopt.assignment.global.auth.kakao.client.KaKaoUserInfoClient;
 import or.sopt.assignment.global.auth.kakao.dto.KaKaoOAuthTokenDTO;
 import or.sopt.assignment.global.config.JWTConfig;
+import or.sopt.assignment.global.config.KaKaoConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -50,19 +51,14 @@ public class OAuthService {
     private final JWTUtil jwtUtil;
     private final JWTConfig jwtConfig;
 
-
-    @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
-    private String clientId;
-
-    @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
-    private String redirectUri;
+    private final KaKaoConfig kaKaoConfig;
 
 
 
     public String requestRedirect() {
         return String.format(
                 "https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code",
-                clientId, redirectUri
+                kaKaoConfig.getClientId(), kaKaoConfig.getRedirectUri()
         );
     }
 
@@ -117,8 +113,8 @@ public class OAuthService {
 
         return kaKaoOAuthClient.getToken(
                 "authorization_code",
-                clientId,
-                redirectUri,
+                kaKaoConfig.getClientId(),
+                kaKaoConfig.getRedirectUri(),
                 accessCode
         );
     }

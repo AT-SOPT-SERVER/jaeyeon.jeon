@@ -1,4 +1,4 @@
-package or.sopt.assignment.global.auth.kakao.config;
+package or.sopt.assignment.global.config;
 
 import feign.RequestInterceptor;
 import org.springframework.context.annotation.Bean;
