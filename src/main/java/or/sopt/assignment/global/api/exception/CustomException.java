@@ -1,7 +1,9 @@
-package or.sopt.assignment.global.exception;
+package or.sopt.assignment.global.api.exception;
 
-import or.sopt.assignment.global.status.ErrorStatus;
+import lombok.Getter;
+import or.sopt.assignment.global.api.exception.status.ErrorStatus;
 
+@Getter
 public class CustomException extends RuntimeException {
 
     private final ErrorStatus errorStatus;
@@ -10,7 +12,4 @@ public class CustomException extends RuntimeException {
         this.errorStatus = errorStatus;
     }
 
-    public ErrorStatus getErrorStatus() {
-        return errorStatus;
-    }
 }

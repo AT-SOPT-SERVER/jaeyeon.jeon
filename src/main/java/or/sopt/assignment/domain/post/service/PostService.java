@@ -9,10 +9,10 @@ import or.sopt.assignment.domain.post.controller.dto.PostUpdateRequestDTO;
 import or.sopt.assignment.domain.post.entity.Post;
 import or.sopt.assignment.domain.post.repository.PostRepository;
 import or.sopt.assignment.domain.user.entity.User;
-import or.sopt.assignment.global.exception.handler.PostHandler;
-import or.sopt.assignment.global.exception.handler.UserHandler;
-import or.sopt.assignment.global.port.LocalDateTime;
-import or.sopt.assignment.global.status.ErrorStatus;
+import or.sopt.assignment.global.api.exception.status.CommonErrorStatus;
+import or.sopt.assignment.global.api.exception.handler.PostHandler;
+import or.sopt.assignment.global.api.exception.handler.UserHandler;
+import or.sopt.assignment.global.infrastructure.LocalDateTime;
 import or.sopt.assignment.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +40,7 @@ public class PostService {
         try {
             postTags = Tags.valueOf(postRequestDTO.tags().toUpperCase());
         } catch (Exception e) {
-            throw new PostHandler(ErrorStatus._POST_TAG_NOT_FOUND);
+            throw new PostHandler(CommonErrorStatus._POST_TAG_NOT_FOUND);
         }
 
         Post newPost = Post.of(postRequestDTO, localDateTimeImpl, findUser, postTags);
@@ -122,7 +122,7 @@ public class PostService {
         try {
             postTags = Tags.valueOf(tags);
         } catch (Exception e) {
-            throw new PostHandler(ErrorStatus._POST_TAG_NOT_FOUND);
+            throw new PostHandler(CommonErrorStatus._POST_TAG_NOT_FOUND);
         }
 
         List<Post> posts = postRepository.findByTags(postTags);
@@ -140,7 +140,7 @@ public class PostService {
 
     private Post findPost(Long id) {
         return postRepository.findById(id)
-                .orElseThrow(() -> new PostHandler(ErrorStatus._POST_NOT_FOUND));
+                .orElseThrow(() -> new PostHandler(CommonErrorStatus._POST_NOT_FOUND));
     }
 
     private void createValidate(String title, String content) {
@@ -156,6 +156,6 @@ public class PostService {
 
     private User findUser(PostCreateRequestDTO postRequestDTO) {
         return userRepository.findById(postRequestDTO.userId())
-                .orElseThrow(()->new UserHandler(ErrorStatus._USER_NOT_FOUND));
+                .orElseThrow(()->new UserHandler(CommonErrorStatus._USER_NOT_FOUND));
     }
 }

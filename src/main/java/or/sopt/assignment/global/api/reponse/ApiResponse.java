@@ -1,7 +1,7 @@
-package or.sopt.assignment.global.reponse;
+package or.sopt.assignment.global.api.reponse;
 
-import or.sopt.assignment.global.status.ErrorStatus;
-import or.sopt.assignment.global.status.SuccessStatus;
+import or.sopt.assignment.global.api.exception.status.ErrorStatus;
+import or.sopt.assignment.global.api.exception.status.SuccessStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 

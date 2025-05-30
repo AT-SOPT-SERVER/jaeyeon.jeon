@@ -1,4 +1,4 @@
-package or.sopt.assignment.global.reponse;
+package or.sopt.assignment.global.api.reponse;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

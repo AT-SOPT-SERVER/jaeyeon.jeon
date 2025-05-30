@@ -1,8 +1,12 @@
-package or.sopt.assignment.global.status;
+package or.sopt.assignment.global.api.exception.status;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-public enum ErrorStatus {
+@AllArgsConstructor
+@Getter
+public enum CommonErrorStatus implements ErrorStatus {
 
     /**
      * 제가 생각한 에러코드를 작성하는 좋은 방법은
@@ -12,6 +16,10 @@ public enum ErrorStatus {
      *
      * 그리고 추가로 지금 ErrorStatus를 작성할때도 이름을 (도메인_예외 내용요약) 이렇게 구성하고 있는데 이것도 정확한 규칙없이 하는 느낌이라
      * 좋은 방법있으면 말씀해주세요
+     *
+     * 05/30
+     * 인터페이스를 분리하면서 이전의 status가 이리로 오게 되었습니다....
+     * 다른 할일이 많아서 이것도 나중에 수정 하겠습니다....!
      * */
     _HEADER_NOT_FOUND(HttpStatus.NOT_FOUND,"HEADER4001","헤더를 찾을 수 없습니다"),
 
@@ -27,25 +35,8 @@ public enum ErrorStatus {
     _POST_NOT_FOUND(HttpStatus.BAD_REQUEST,"POST4007","게시글을 찾을 수 없습니다"),
     _POST_TAG_NOT_FOUND(HttpStatus.BAD_REQUEST,"POST4008","게시글 태그가 일치하지 않습니다"),;
 
-    private HttpStatus httpStatus;
-    private String code;
-    private String message;
+    private final HttpStatus httpStatus;
+    private final String code;
+    private final String message;
 
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    ErrorStatus(HttpStatus httpStatus, String code, String message) {
-        this.httpStatus = httpStatus;
-        this.code = code;
-        this.message = message;
-    }
 }

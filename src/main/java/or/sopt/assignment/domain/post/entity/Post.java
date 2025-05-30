@@ -40,7 +40,7 @@ public class Post {
 
 
     public static Post of(PostCreateRequestDTO postRequestDTO,
-                   or.sopt.assignment.global.port.LocalDateTime localDateTime,
+                   or.sopt.assignment.global.infrastructure.LocalDateTime localDateTime,
                    User user,
                    Tags tags){
 
