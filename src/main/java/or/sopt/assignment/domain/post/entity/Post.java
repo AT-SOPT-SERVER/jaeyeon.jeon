@@ -28,7 +28,7 @@ public class Post {
 
     private Tags tags;
 
-    private Integer likesCount;
+    private Integer likesCount = 0;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -38,6 +38,16 @@ public class Post {
     public void update(String title, String content){
         this.title = title;
         this.content = content;
+    }
+
+    public void decreaseLikesCount() {
+        if (this.likesCount > 0) {
+            this.likesCount--;
+        }
+    }
+
+    public void increaseLikesCount() {
+        this.likesCount++;
     }
 
 
