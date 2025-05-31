@@ -4,12 +4,9 @@ import lombok.RequiredArgsConstructor;
 import or.sopt.assignment.domain.comment.controller.dto.CommentGetResponseDTO;
 import or.sopt.assignment.domain.comment.entity.Comment;
 import or.sopt.assignment.domain.comment.repository.CommentRepository;
-import or.sopt.assignment.domain.post.dto.PostGetResponseListDTO;
+import or.sopt.assignment.domain.post.dto.*;
 import or.sopt.assignment.domain.post.validator.PostServiceValidator;
 import or.sopt.assignment.domain.post.entity.Enum.Tags;
-import or.sopt.assignment.domain.post.dto.PostCreateRequestDTO;
-import or.sopt.assignment.domain.post.dto.PostGetResponseDTO;
-import or.sopt.assignment.domain.post.dto.PostUpdateRequestDTO;
 import or.sopt.assignment.domain.post.entity.Post;
 import or.sopt.assignment.domain.post.repository.PostRepository;
 import or.sopt.assignment.domain.user.entity.User;
@@ -18,6 +15,10 @@ import or.sopt.assignment.global.api.exception.handler.PostHandler;
 import or.sopt.assignment.domain.user.exception.UserHandler;
 import or.sopt.assignment.global.infrastructure.LocalDateTime;
 import or.sopt.assignment.domain.user.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +55,27 @@ public class PostService {
 
         return newPost.getId();
     }
+
+
+    /**
+     * - 게시글 전체 조회 시, 10개 단위로 페이지네이션을 적용해주세요.
+     * - 최신 게시글이 먼저 조회되도록 정렬 기준을 명확히 설정해주세요.
+     * - 페이지 정보와 함께 응답을 구성해주세요. (총 페이지 수, 현재 페이지 등)
+     * */
+    public PostGetResponsePagingListDTO getAllPostsByPaging(int page) {
+
+        Pageable pageable = PageRequest.of(page, 10, Sort.by("createdAt").descending());
+        Page<Post> findPostsPage = postRepository.findAllByOrderByCreatedAtDesc(pageable);
+
+        Page<PostGetResponseDTO> dtoPage = findPostsPage.map(post -> {
+            List<Comment> comments = commentRepository.findByPostId(post.getId());
+            List<CommentGetResponseDTO> commentDTOs = getCommentGetResponseDTOS(comments);
+            return PostGetResponseDTO.from(post, commentDTOs);
+        });
+
+        return PostGetResponsePagingListDTO.of(dtoPage, page);
+    }
+
 
     public PostGetResponseListDTO getAllPosts(){
         List<Post> findPosts = postRepository.findAllByOrderByCreatedAtDesc();
