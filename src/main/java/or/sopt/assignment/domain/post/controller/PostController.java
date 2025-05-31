@@ -1,9 +1,10 @@
 package or.sopt.assignment.domain.post.controller;
 
-import or.sopt.assignment.domain.post.controller.dto.PostCreateRequestDTO;
-import or.sopt.assignment.domain.post.controller.dto.PostGetResponseDTO;
+import or.sopt.assignment.domain.post.dto.PostCreateRequestDTO;
+import or.sopt.assignment.domain.post.dto.PostGetResponseDTO;
+import or.sopt.assignment.domain.post.dto.PostGetResponseListDTO;
 import or.sopt.assignment.domain.post.service.PostService;
-import or.sopt.assignment.domain.post.controller.dto.PostUpdateRequestDTO;
+import or.sopt.assignment.domain.post.dto.PostUpdateRequestDTO;
 import or.sopt.assignment.global.api.reponse.ResponseDTO;
 import or.sopt.assignment.global.api.exception.status.SuccessStatus;
 import or.sopt.assignment.global.api.reponse.ApiResponseUtil;
@@ -67,14 +68,14 @@ public class PostController {
 
     @GetMapping("/posts/user-name")
     public ResponseEntity<ResponseDTO<?>> searchPostsByUserName(@RequestParam String userName) {
-        List<PostGetResponseDTO> result = postService.searchByUserName(userName);
+        PostGetResponseListDTO result = postService.searchByUserName(userName);
 
         return ApiResponseUtil.ok(SuccessStatus._READ_SUCCESS,result);
     }
 
     @GetMapping("/posts/tags")
     public ResponseEntity<ResponseDTO<?>> searchPostsByTag(@RequestParam String tags) {
-        List<PostGetResponseDTO> result = postService.searchByTags(tags);
+        PostGetResponseListDTO result = postService.searchByTags(tags);
 
         return ApiResponseUtil.ok(SuccessStatus._READ_SUCCESS,result);
     }

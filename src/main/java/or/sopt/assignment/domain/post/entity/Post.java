@@ -3,7 +3,7 @@ package or.sopt.assignment.domain.post.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import or.sopt.assignment.domain.post.controller.dto.PostCreateRequestDTO;
+import or.sopt.assignment.domain.post.dto.PostCreateRequestDTO;
 import or.sopt.assignment.domain.post.entity.Enum.Tags;
 import or.sopt.assignment.domain.user.entity.User;
 
