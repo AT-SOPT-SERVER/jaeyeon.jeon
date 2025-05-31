@@ -28,6 +28,8 @@ public class Post {
 
     private Tags tags;
 
+    private Integer likesCount;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;

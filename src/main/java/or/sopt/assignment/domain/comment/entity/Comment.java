@@ -24,6 +24,8 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    private Integer likesCount;
+
     public static Comment of(String content, Post post, User user) {
         return Comment.builder()
                 .content(content)
