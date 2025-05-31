@@ -31,4 +31,8 @@ public class Comment {
                 .user(user)
                 .build();
     }
+
+    public static void update(Comment comment,String content) {
+        comment.content = content;
+    }
 }

@@ -5,7 +5,7 @@ import or.sopt.assignment.global.api.exception.status.SuccessStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-public class ApiResponse {
+public class ApiResponseUtil {
 
     /**
      * 왜 응답 DTO를 ResponseEntity로 감싸서 보내야하는지 고민을 해보았습니다.
