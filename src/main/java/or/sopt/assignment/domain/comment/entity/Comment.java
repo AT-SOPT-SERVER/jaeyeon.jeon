@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import or.sopt.assignment.domain.post.entity.Post;
 import or.sopt.assignment.domain.user.entity.User;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,6 +25,8 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    private Integer likesCount = 0;
+
     public static Comment of(String content, Post post, User user) {
         return Comment.builder()
                 .content(content)
@@ -34,5 +37,15 @@ public class Comment {
 
     public static void update(Comment comment,String content) {
         comment.content = content;
+    }
+
+    public void decreaseLikesCount() {
+        if (this.likesCount > 0) {
+            this.likesCount--;
+        }
+    }
+
+    public void increaseLikesCount() {
+        this.likesCount++;
     }
 }
