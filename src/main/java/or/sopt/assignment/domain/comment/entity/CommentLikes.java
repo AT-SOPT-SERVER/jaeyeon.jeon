@@ -22,4 +22,11 @@ public class CommentLikes {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     private Comment comment;
+
+    public static CommentLikes from(User user, Comment comment) {
+        return CommentLikes.builder()
+                .comment(comment)
+                .user(user)
+                .build();
+    }
 }
