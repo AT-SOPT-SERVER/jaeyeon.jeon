@@ -1,6 +1,7 @@
 package or.sopt.assignment.domain.comment.service;
 
 import lombok.RequiredArgsConstructor;
+import or.sopt.assignment.domain.comment.controller.dto.CommentDeleteRequestDTO;
 import or.sopt.assignment.domain.comment.controller.dto.CommentSaveRequestDTO;
 import or.sopt.assignment.domain.comment.controller.dto.CommentUpdateRequestDTO;
 import or.sopt.assignment.domain.comment.entity.Comment;
@@ -33,8 +34,8 @@ public class CommentServiceImpl implements CommentService {
 
         commentLengthValid(request.content());
 
-        User findUser = getFindUser(request.userId());
-        Post findPost = getFindPost(request.postId());
+        User findUser = findUser(request.userId());
+        Post findPost = findPost(request.postId());
 
         Comment newComment = Comment.of(request.content(), findPost, findUser);
 
@@ -48,15 +49,24 @@ public class CommentServiceImpl implements CommentService {
 
         commentLengthValid(request.content());
 
-        Comment findComment = findComment(request);
-        User findUser = getFindUser(request.userId());
+        Comment findComment = findComment(request.commentId());
+        User findUser = findUser(request.userId());
 
-        if (!findComment.getUser().equals(findUser)) {
-            throw new CommentHandler(CommentErrorStatus.COMMENT_UNAUTHORIZED);
-        }
+        commentAuthorizeValid(findComment, findUser);
 
         Comment.update(findComment, request.content());
+    }
 
+
+    @Override
+    @Transactional
+    public void delete(CommentDeleteRequestDTO request) {
+        Comment findComment = findComment(request.commentId());
+        User findUser = findUser(request.userId());
+
+        commentAuthorizeValid(findComment, findUser);
+
+        commentRepository.delete(findComment);
     }
 
 
@@ -67,18 +77,24 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
-    private Post getFindPost(Long postId) {
+    private static void commentAuthorizeValid(Comment findComment, User findUser) {
+        if (!findComment.getUser().equals(findUser)) {
+            throw new CommentHandler(CommentErrorStatus.COMMENT_UNAUTHORIZED);
+        }
+    }
+
+    private Post findPost(Long postId) {
         return postRepository.findById(postId)
                 .orElseThrow(()-> new PostHandler(CommonErrorStatus._POST_NOT_FOUND));
     }
 
-    private User getFindUser(Long userId) {
+    private User findUser(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(()-> new UserHandler(UserErrorStatus.USER_NOT_FOUND));
     }
 
-    private Comment findComment(CommentUpdateRequestDTO request) {
-        return commentRepository.findById(request.commentId())
+    private Comment findComment(Long commentId) {
+        return commentRepository.findById(commentId)
                 .orElseThrow(() -> new CommentHandler(CommentErrorStatus.COMMENT_NOT_FOUND));
     }
 }

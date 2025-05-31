@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import or.sopt.assignment.domain.comment.controller.dto.CommentDeleteRequestDTO;
 import or.sopt.assignment.domain.comment.controller.dto.CommentSaveRequestDTO;
 import or.sopt.assignment.domain.comment.controller.dto.CommentUpdateRequestDTO;
 import or.sopt.assignment.domain.comment.service.CommentService;
@@ -34,10 +35,14 @@ public class CommentController {
     public ResponseEntity<ResponseDTO<?>> update(@RequestBody CommentUpdateRequestDTO request){
         commentService.update(request);
 
-        return ApiResponseUtil.ok(SuccessStatus._UPDATE_SUCCESS,"성공적으로 수정 되었습니다");
+        return ApiResponseUtil.ok(SuccessStatus._UPDATE_SUCCESS,"성공적으로 수정되었습니다");
     }
 
-    // 댓글 삭제
+    @DeleteMapping("/delete")
+    @Operation(summary = "댓글 삭제 API")
+    public ResponseEntity<ResponseDTO<?>> delete(@RequestBody CommentDeleteRequestDTO request){
+        commentService.delete(request);
 
-    // 댓글 조회
+        return ApiResponseUtil.ok(SuccessStatus._DELETE_SUCCESS,"성공적으로 삭제되었습니다");
+    }
 }
