@@ -37,10 +37,7 @@ public class PostLikesServiceImpl implements PostLikesService {
             post.decreaseLikesCount();
             postLikesRepository.delete(postLikes);
         } else {
-            PostLikes newPostLikes = PostLikes.builder()
-                    .user(user)
-                    .post(post)
-                    .build();
+            PostLikes newPostLikes = PostLikes.of(post, user);
             post.increaseLikesCount();
             postLikesRepository.save(newPostLikes);
         }

@@ -22,4 +22,11 @@ public class PostLikes {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public static PostLikes of(Post post, User user) {
+        return PostLikes.builder()
+                .post(post)
+                .user(user)
+                .build();
+    }
 }
