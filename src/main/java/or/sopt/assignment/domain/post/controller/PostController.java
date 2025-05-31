@@ -1,6 +1,7 @@
 package or.sopt.assignment.domain.post.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import or.sopt.assignment.domain.post.dto.PostCreateRequestDTO;
 import or.sopt.assignment.domain.post.dto.PostGetResponseDTO;
@@ -40,6 +41,16 @@ public class PostController {
     public ResponseEntity<ResponseDTO<?>> getAllPosts() {
 
         return ApiResponseUtil.ok(SuccessStatus._READ_SUCCESS,postService.getAllPosts());
+    }
+
+    @GetMapping("/posts/paging")
+    @Operation(summary = "게시글 페이징 전체조회 API",
+    description = "게시글을 **페이지**로 조회하는 API 입니다 <br>" +
+            "10개 단위로 반환되며, 최신순으로 정렬되어 반환됩니다")
+    public ResponseEntity<ResponseDTO<?>> getAllPostsPaging(
+            @Parameter(description = "조회하는 페이지를 입력해주세요") @RequestParam(defaultValue = "0") int page) {
+
+        return ApiResponseUtil.ok(SuccessStatus._READ_SUCCESS,postService.getAllPostsByPaging(page));
     }
 
     // 게시글 상세 조회

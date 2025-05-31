@@ -3,6 +3,8 @@ package or.sopt.assignment.domain.post.repository;
 import jakarta.persistence.LockModeType;
 import or.sopt.assignment.domain.post.entity.Enum.Tags;
 import or.sopt.assignment.domain.post.entity.Post;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
@@ -34,4 +36,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT p FROM Post p WHERE p.id = :postId")
     Optional<Post> findByIdForUpdate(Long postId);
+
+
+    @Query("SELECT p FROM Post p ORDER BY p.createdAt DESC")
+    Page<Post> findAllByOrderByCreatedAtDesc(Pageable pageable);
+
 }
