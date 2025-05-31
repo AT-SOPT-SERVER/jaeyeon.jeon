@@ -1,17 +1,21 @@
 package or.sopt.assignment.domain.post.service;
 
 import lombok.RequiredArgsConstructor;
+import or.sopt.assignment.domain.comment.controller.dto.CommentGetResponseDTO;
+import or.sopt.assignment.domain.comment.entity.Comment;
+import or.sopt.assignment.domain.comment.repository.CommentRepository;
+import or.sopt.assignment.domain.post.dto.PostGetResponseListDTO;
 import or.sopt.assignment.domain.post.validator.PostServiceValidator;
 import or.sopt.assignment.domain.post.entity.Enum.Tags;
-import or.sopt.assignment.domain.post.controller.dto.PostCreateRequestDTO;
-import or.sopt.assignment.domain.post.controller.dto.PostGetResponseDTO;
-import or.sopt.assignment.domain.post.controller.dto.PostUpdateRequestDTO;
+import or.sopt.assignment.domain.post.dto.PostCreateRequestDTO;
+import or.sopt.assignment.domain.post.dto.PostGetResponseDTO;
+import or.sopt.assignment.domain.post.dto.PostUpdateRequestDTO;
 import or.sopt.assignment.domain.post.entity.Post;
 import or.sopt.assignment.domain.post.repository.PostRepository;
 import or.sopt.assignment.domain.user.entity.User;
 import or.sopt.assignment.global.api.exception.status.CommonErrorStatus;
 import or.sopt.assignment.global.api.exception.handler.PostHandler;
-import or.sopt.assignment.global.api.exception.handler.UserHandler;
+import or.sopt.assignment.domain.user.exception.UserHandler;
 import or.sopt.assignment.global.infrastructure.LocalDateTime;
 import or.sopt.assignment.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -29,6 +33,7 @@ public class PostService {
     private final LocalDateTime localDateTimeImpl;
 
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
 
     public Long createPost(PostCreateRequestDTO postRequestDTO) {
@@ -50,24 +55,28 @@ public class PostService {
         return newPost.getId();
     }
 
-    public List<PostGetResponseDTO> getAllPosts(){
+    public PostGetResponseListDTO getAllPosts(){
         List<Post> findPosts = postRepository.findAllByOrderByCreatedAtDesc();
 
-        return findPosts.stream().map(
-                post -> new PostGetResponseDTO(
-                        post.getTitle(),
-                        post.getContent(),
-                        post.getUser().getName())
-        ).toList();
+
+        List<PostGetResponseDTO> dtos = findPosts.stream()
+                .map(post -> {
+                    List<Comment> comments = commentRepository.findByPostId(post.getId());
+                    List<CommentGetResponseDTO> commentGetResponseDTOS = getCommentGetResponseDTOS(comments);
+                    return PostGetResponseDTO.from(post, commentGetResponseDTOS);
+                })
+                .toList();
+
+        return PostGetResponseListDTO.of(dtos);
     }
 
     public PostGetResponseDTO getPostById(Long id){
         Post findPost = findPost(id);
 
-        return new PostGetResponseDTO(
-                findPost.getTitle(),
-                findPost.getContent(),
-                findPost.getUser().getName());
+        List<Comment> comments = commentRepository.findByPostId(findPost.getId());
+        List<CommentGetResponseDTO> commentGetResponseDTOS = getCommentGetResponseDTOS(comments);
+
+        return PostGetResponseDTO.from(findPost, commentGetResponseDTOS);
     }
 
     public void deletePostById(Long id){
@@ -90,32 +99,38 @@ public class PostService {
        return findPost.getId();
     }
 
-    public List<PostGetResponseDTO> searchPostsByKeyword(String keyword) {
-        List<Post> result = postRepository.findByTitleContaining(keyword);
+    public PostGetResponseListDTO searchPostsByKeyword(String keyword) {
+        List<Post> findPosts = postRepository.findByTitleContaining(keyword);
 
-        return result.stream().map(
-                post -> new PostGetResponseDTO(post.getTitle(),
-                        post.getContent(),
-                        post.getUser().getName())
-        ).toList();
+        List<PostGetResponseDTO> dtos = findPosts.stream()
+                .map(post -> {
+                    List<Comment> comments = commentRepository.findByPostId(post.getId());
+                    List<CommentGetResponseDTO> commentGetResponseDTOS = getCommentGetResponseDTOS(comments);
+                    return PostGetResponseDTO.from(post, commentGetResponseDTOS);
+                })
+                .toList();
+
+        return PostGetResponseListDTO.of(dtos);
     }
 
-    public List<PostGetResponseDTO> searchByUserName(String name) {
+    public PostGetResponseListDTO searchByUserName(String name) {
 
-        List<Post> posts = postRepository.findByUserName(name);
+        List<Post> findPosts = postRepository.findByUserName(name);
 
-        return posts.stream().map(
-                post -> new PostGetResponseDTO(
-                        post.getTitle(),
-                        post.getContent(),
-                        post.getUser().getName()
-                )
-        ).toList();
+        List<PostGetResponseDTO> dtos = findPosts.stream()
+                .map(post -> {
+                    List<Comment> comments = commentRepository.findByPostId(post.getId());
+                    List<CommentGetResponseDTO> commentGetResponseDTOS = getCommentGetResponseDTOS(comments);
+                    return PostGetResponseDTO.from(post, commentGetResponseDTOS);
+                })
+                .toList();
+
+        return PostGetResponseListDTO.of(dtos);
 
     }
 
 
-    public List<PostGetResponseDTO> searchByTags(String tags) {
+    public PostGetResponseListDTO searchByTags(String tags) {
 
         Tags postTags;
 
@@ -125,15 +140,17 @@ public class PostService {
             throw new PostHandler(CommonErrorStatus._POST_TAG_NOT_FOUND);
         }
 
-        List<Post> posts = postRepository.findByTags(postTags);
+        List<Post> findPosts = postRepository.findByTags(postTags);
 
-        return posts.stream().map(
-                post -> new PostGetResponseDTO(
-                        post.getTitle(),
-                        post.getContent(),
-                        post.getUser().getName()
-                )
-        ).toList();
+        List<PostGetResponseDTO> dtos = findPosts.stream()
+                .map(post -> {
+                    List<Comment> comments = commentRepository.findByPostId(post.getId());
+                    List<CommentGetResponseDTO> commentGetResponseDTOS = getCommentGetResponseDTOS(comments);
+                    return PostGetResponseDTO.from(post, commentGetResponseDTOS);
+                })
+                .toList();
+
+        return PostGetResponseListDTO.of(dtos);
     }
 
 
@@ -157,5 +174,11 @@ public class PostService {
     private User findUser(PostCreateRequestDTO postRequestDTO) {
         return userRepository.findById(postRequestDTO.userId())
                 .orElseThrow(()->new UserHandler(CommonErrorStatus._USER_NOT_FOUND));
+    }
+
+    private static List<CommentGetResponseDTO> getCommentGetResponseDTOS(List<Comment> comments) {
+        return comments.stream()
+                .map(CommentGetResponseDTO::from)
+                .toList();
     }
 }

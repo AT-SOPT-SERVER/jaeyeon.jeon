@@ -1,6 +1,6 @@
 package or.sopt.assignment.global.api.exception;
 
-import or.sopt.assignment.global.api.reponse.ApiResponse;
+import or.sopt.assignment.global.api.reponse.ApiResponseUtil;
 import or.sopt.assignment.global.api.exception.status.CommonErrorStatus;
 import or.sopt.assignment.global.api.exception.status.ErrorDTO;
 import org.springframework.http.HttpStatus;
@@ -31,6 +31,6 @@ public class GlobalExceptionalHandler {
     // 필수로 받아야하는 파라미터가 들어오지 않으면 발생하는 MissingRequestHeaderException를 핸들링 하였습니다.
     @ExceptionHandler(MissingRequestHeaderException.class)
     public ResponseEntity<?> handleMissingRequestHeaderException(MissingRequestHeaderException e) {
-        return ApiResponse.fail(CommonErrorStatus._HEADER_NOT_FOUND);
+        return ApiResponseUtil.fail(CommonErrorStatus._HEADER_NOT_FOUND);
     }
 }
