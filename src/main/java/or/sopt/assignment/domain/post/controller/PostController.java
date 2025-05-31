@@ -1,5 +1,7 @@
 package or.sopt.assignment.domain.post.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import or.sopt.assignment.domain.post.dto.PostCreateRequestDTO;
 import or.sopt.assignment.domain.post.dto.PostGetResponseDTO;
 import or.sopt.assignment.domain.post.dto.PostGetResponseListDTO;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Tag(name = "게시글 관련 API")
 public class PostController {
 
     private final PostService postService;
@@ -24,6 +27,7 @@ public class PostController {
 
     // 게시글 생성 - 단일 객체를 저장하니까 s를 붙이지 않는다, 난 명사는 무조건 복수형인줄 알았는데 그게 아니구나
     @PostMapping("/post")
+    @Operation(summary = "게시글 생성 API")
     public ResponseEntity<ResponseDTO<?>> createPost(@RequestBody PostCreateRequestDTO request){
         Long result = postService.createPost(request);
 
@@ -32,6 +36,7 @@ public class PostController {
 
     // 게시글 전체 조회
     @GetMapping("/posts")
+    @Operation(summary = "게시글 전체조회 API")
     public ResponseEntity<ResponseDTO<?>> getAllPosts() {
 
         return ApiResponseUtil.ok(SuccessStatus._READ_SUCCESS,postService.getAllPosts());
@@ -39,6 +44,7 @@ public class PostController {
 
     // 게시글 상세 조회
     @GetMapping("/post")
+    @Operation(summary = "게시글 상세조회 API")
     public ResponseEntity<ResponseDTO<?>> getPostById(@RequestHeader("id") Long id) {
         PostGetResponseDTO result = postService.getPostById(id);
 
@@ -47,6 +53,7 @@ public class PostController {
 
     // 게시글 삭제
     @DeleteMapping("/post")
+    @Operation(summary = "게시글 삭제 API")
     public ResponseEntity<ResponseDTO<?>> deletePostById(@RequestHeader("id") Long id) {
         postService.deletePostById(id);
         return ApiResponseUtil.ok(SuccessStatus._DELETE_SUCCESS);
@@ -54,6 +61,7 @@ public class PostController {
 
     // 게시글 수정
     @PatchMapping("/post")
+    @Operation(summary = "게시글 수정 API")
     public ResponseEntity<ResponseDTO<?>> updatePostTitle(@RequestHeader("id") Long id,
                                    @RequestBody PostUpdateRequestDTO request) {
         Long result = postService.update(id, request);
@@ -61,12 +69,14 @@ public class PostController {
     }
 
     @GetMapping("/posts/keyword")
+    @Operation(summary = "게시글 키워드로 찾기 API")
     public ResponseEntity<ResponseDTO<?>> searchPostsByKeyword(@RequestParam String keyword) {
 
         return ApiResponseUtil.ok(SuccessStatus._READ_SUCCESS,postService.searchPostsByKeyword(keyword));
     }
 
     @GetMapping("/posts/user-name")
+    @Operation(summary = "게시글 생성자로 찾기 API")
     public ResponseEntity<ResponseDTO<?>> searchPostsByUserName(@RequestParam String userName) {
         PostGetResponseListDTO result = postService.searchByUserName(userName);
 
@@ -74,6 +84,7 @@ public class PostController {
     }
 
     @GetMapping("/posts/tags")
+    @Operation(summary = "게시글 태그로 찾기 API")
     public ResponseEntity<ResponseDTO<?>> searchPostsByTag(@RequestParam String tags) {
         PostGetResponseListDTO result = postService.searchByTags(tags);
 
