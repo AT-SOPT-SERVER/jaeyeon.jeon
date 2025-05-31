@@ -37,6 +37,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT p FROM Post p WHERE p.id = :postId")
     Optional<Post> findByIdForUpdate(Long postId);
 
+
+    @Query("SELECT p FROM Post p ORDER BY p.createdAt DESC")
     Page<Post> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
 }
