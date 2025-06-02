@@ -17,14 +17,12 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Long>,PostRepositoryCustom {
 
     List<Post> findByTitleContaining(String keyword);
-
+    
     List<Post> findByUserName(String name);
 
     boolean existsByTitle(String title);
 
     Optional<Post> findTopByOrderByCreatedAtDesc();
-
-    List<Post> findAllByOrderByCreatedAtDesc();
 
     List<Post> findByTags(Tags tags);
 

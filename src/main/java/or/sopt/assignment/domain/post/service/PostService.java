@@ -78,7 +78,7 @@ public class PostService {
 
 
     public PostGetResponseListDTO getAllPosts(){
-        List<Post> findPosts = postRepository.findAllByOrderByCreatedAtDesc();
+        List<Post> findPosts = postRepository.findAllOrderedByCreatedAtDescV2();
 
 
         List<PostGetResponseDTO> dtos = findPosts.stream()
@@ -133,6 +133,22 @@ public class PostService {
                 .toList();
 
         return PostGetResponseListDTO.of(dtos);
+    }
+
+    public PostGetResponseListDTO searchByUserNameV2(String name) {
+
+        List<Post> findPosts = postRepository.findByUserNameV2(name);
+
+        List<PostGetResponseDTO> dtos = findPosts.stream()
+                .map(post -> {
+                    List<Comment> comments = commentRepository.findByPostId(post.getId());
+                    List<CommentGetResponseDTO> commentGetResponseDTOS = getCommentGetResponseDTOS(comments);
+                    return PostGetResponseDTO.from(post, commentGetResponseDTOS);
+                })
+                .toList();
+
+        return PostGetResponseListDTO.of(dtos);
+
     }
 
     public PostGetResponseListDTO searchByUserName(String name) {
