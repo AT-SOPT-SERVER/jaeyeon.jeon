@@ -68,7 +68,7 @@ public class PostService {
         Page<Post> findPostsPage = postRepository.findAllByOrderByCreatedAtDesc(pageable);
 
         Page<PostGetResponseDTO> dtoPage = findPostsPage.map(post -> {
-            List<Comment> comments = commentRepository.findByPostId(post.getId());
+            List<Comment> comments = commentRepository.findByPostIdWithUser(post.getId());
             List<CommentGetResponseDTO> commentDTOs = getCommentGetResponseDTOS(comments);
             return PostGetResponseDTO.from(post, commentDTOs);
         });
@@ -83,7 +83,7 @@ public class PostService {
 
         List<PostGetResponseDTO> dtos = findPosts.stream()
                 .map(post -> {
-                    List<Comment> comments = commentRepository.findByPostId(post.getId());
+                    List<Comment> comments = commentRepository.findByPostIdWithUser(post.getId());
                     List<CommentGetResponseDTO> commentGetResponseDTOS = getCommentGetResponseDTOS(comments);
                     return PostGetResponseDTO.from(post, commentGetResponseDTOS);
                 })
@@ -95,7 +95,7 @@ public class PostService {
     public PostGetResponseDTO getPostById(Long id){
         Post findPost = findPost(id);
 
-        List<Comment> comments = commentRepository.findByPostId(findPost.getId());
+        List<Comment> comments = commentRepository.findByPostIdWithUser(findPost.getId());
         List<CommentGetResponseDTO> commentGetResponseDTOS = getCommentGetResponseDTOS(comments);
 
         return PostGetResponseDTO.from(findPost, commentGetResponseDTOS);
@@ -126,7 +126,7 @@ public class PostService {
 
         List<PostGetResponseDTO> dtos = findPosts.stream()
                 .map(post -> {
-                    List<Comment> comments = commentRepository.findByPostId(post.getId());
+                    List<Comment> comments = commentRepository.findByPostIdWithUser(post.getId());
                     List<CommentGetResponseDTO> commentGetResponseDTOS = getCommentGetResponseDTOS(comments);
                     return PostGetResponseDTO.from(post, commentGetResponseDTOS);
                 })
@@ -141,7 +141,7 @@ public class PostService {
 
         List<PostGetResponseDTO> dtos = findPosts.stream()
                 .map(post -> {
-                    List<Comment> comments = commentRepository.findByPostId(post.getId());
+                    List<Comment> comments = commentRepository.findByPostIdWithUser(post.getId());
                     List<CommentGetResponseDTO> commentGetResponseDTOS = getCommentGetResponseDTOS(comments);
                     return PostGetResponseDTO.from(post, commentGetResponseDTOS);
                 })
@@ -157,7 +157,7 @@ public class PostService {
 
         List<PostGetResponseDTO> dtos = findPosts.stream()
                 .map(post -> {
-                    List<Comment> comments = commentRepository.findByPostId(post.getId());
+                    List<Comment> comments = commentRepository.findByPostIdWithUser(post.getId());
                     List<CommentGetResponseDTO> commentGetResponseDTOS = getCommentGetResponseDTOS(comments);
                     return PostGetResponseDTO.from(post, commentGetResponseDTOS);
                 })
@@ -182,7 +182,7 @@ public class PostService {
 
         List<PostGetResponseDTO> dtos = findPosts.stream()
                 .map(post -> {
-                    List<Comment> comments = commentRepository.findByPostId(post.getId());
+                    List<Comment> comments = commentRepository.findByPostIdWithUser(post.getId());
                     List<CommentGetResponseDTO> commentGetResponseDTOS = getCommentGetResponseDTOS(comments);
                     return PostGetResponseDTO.from(post, commentGetResponseDTOS);
                 })
