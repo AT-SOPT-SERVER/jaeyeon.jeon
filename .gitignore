@@ -38,3 +38,4 @@ out/
 
 src/main/generated
 src/main/resources/application.yml
+src/test/java/or/sopt/assignment/resources/application-test.yml
