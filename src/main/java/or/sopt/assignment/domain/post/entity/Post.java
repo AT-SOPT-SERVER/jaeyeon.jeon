@@ -3,11 +3,13 @@ package or.sopt.assignment.domain.post.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import or.sopt.assignment.domain.comment.entity.Comment;
 import or.sopt.assignment.domain.post.dto.PostCreateRequestDTO;
 import or.sopt.assignment.domain.post.entity.Enum.Tags;
 import or.sopt.assignment.domain.user.entity.User;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -33,6 +35,9 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
 
 
     public void update(String title, String content){

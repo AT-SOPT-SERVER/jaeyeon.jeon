@@ -86,10 +86,19 @@ public class PostController {
         return ApiResponseUtil.ok(SuccessStatus._READ_SUCCESS,postService.searchPostsByKeyword(keyword));
     }
 
-    @GetMapping("/posts/user-name")
+    @GetMapping("/v1/posts/user-name")
     @Operation(summary = "게시글 생성자로 찾기 API")
     public ResponseEntity<ResponseDTO<?>> searchPostsByUserName(@RequestParam String userName) {
         PostGetResponseListDTO result = postService.searchByUserName(userName);
+
+        return ApiResponseUtil.ok(SuccessStatus._READ_SUCCESS,result);
+    }
+
+    @GetMapping("/v2/posts/user-name")
+    @Operation(summary = "게시글 생성자로 찾기 API",
+    description = "**N+1 issue를 해결**한 API 입니다. V1과 쿼리를 비교합니다")
+    public ResponseEntity<ResponseDTO<?>> searchPostsByUserNameV2(@RequestParam String userName) {
+        PostGetResponseListDTO result = postService.searchByUserNameV2(userName);
 
         return ApiResponseUtil.ok(SuccessStatus._READ_SUCCESS,result);
     }

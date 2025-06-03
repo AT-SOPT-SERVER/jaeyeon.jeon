@@ -14,17 +14,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, Long> {
+public interface PostRepository extends JpaRepository<Post, Long>,PostRepositoryCustom {
 
     List<Post> findByTitleContaining(String keyword);
-
+    
     List<Post> findByUserName(String name);
 
     boolean existsByTitle(String title);
 
     Optional<Post> findTopByOrderByCreatedAtDesc();
-
-    List<Post> findAllByOrderByCreatedAtDesc();
 
     List<Post> findByTags(Tags tags);
 
