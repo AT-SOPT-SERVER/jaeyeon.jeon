@@ -1,11 +1,10 @@
-package or.sopt.assignment.global.auth.kakao;
+package or.sopt.assignment.domain.user.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import or.sopt.assignment.global.auth.kakao.dto.OAuthCallbackResponse;
-import or.sopt.assignment.global.auth.kakao.service.OAuthService;
+import or.sopt.assignment.domain.user.service.OAuthService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

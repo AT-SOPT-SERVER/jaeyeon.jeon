@@ -1,4 +1,4 @@
-package or.sopt.assignment.global.auth.jwt;
+package or.sopt.assignment.global.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

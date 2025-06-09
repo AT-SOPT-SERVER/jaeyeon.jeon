@@ -1,4 +1,4 @@
-package or.sopt.assignment.global.auth.dto;
+package or.sopt.assignment.domain.user.controller.dto;
 
 import lombok.Getter;
 

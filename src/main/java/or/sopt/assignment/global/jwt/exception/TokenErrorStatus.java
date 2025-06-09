@@ -1,4 +1,4 @@
-package or.sopt.assignment.global.auth.jwt.exception;
+package or.sopt.assignment.global.jwt.exception;
 
 import lombok.Getter;
 import or.sopt.assignment.global.api.exception.status.ErrorStatus;

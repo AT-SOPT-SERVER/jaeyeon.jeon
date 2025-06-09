@@ -1,21 +1,19 @@
-package or.sopt.assignment.global.auth.kakao.service;
+package or.sopt.assignment.domain.user.service;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import or.sopt.assignment.domain.user.entity.Role;
 import or.sopt.assignment.domain.user.entity.SocialType;
 import or.sopt.assignment.domain.user.entity.User;
+import or.sopt.assignment.domain.user.client.KaKaoOAuthClient;
+import or.sopt.assignment.domain.user.controller.dto.KaKaoOAuthTokenDTO;
 import or.sopt.assignment.domain.user.repository.UserRepository;
-import or.sopt.assignment.global.auth.dto.KaKaoUserInfoResponse;
-import or.sopt.assignment.global.auth.jwt.JWTUtil;
-import or.sopt.assignment.global.auth.kakao.client.KaKaoOAuthClient;
-import or.sopt.assignment.global.auth.kakao.client.KaKaoUserInfoClient;
-import or.sopt.assignment.global.auth.kakao.dto.KaKaoOAuthTokenDTO;
+import or.sopt.assignment.domain.user.controller.dto.KaKaoUserInfoResponse;
+import or.sopt.assignment.global.jwt.JWTUtil;
+import or.sopt.assignment.domain.user.client.KaKaoUserInfoClient;
 import or.sopt.assignment.global.config.JWTConfig;
 import or.sopt.assignment.global.config.KaKaoConfig;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package or.sopt.assignment.global.auth.jwt;
+package or.sopt.assignment.global.jwt;
 
 public interface JWTUtil {
     Long getId(String token);

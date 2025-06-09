@@ -1,4 +1,4 @@
-package or.sopt.assignment.global.auth.controller;
+package or.sopt.assignment.domain.user.controller;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +19,10 @@ import java.util.Base64;
 
 @RestController
 public class AuthController {
+
+    /**
+     * 세미나 때 진행한 내용입니다
+     * */
 
     @GetMapping("/login")
     public ResponseEntity<String> login(HttpServletRequest request) {

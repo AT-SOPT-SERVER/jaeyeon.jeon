@@ -1,9 +1,9 @@
-package or.sopt.assignment.global.auth.kakao.client;
+package or.sopt.assignment.domain.user.client;
 
 
 import or.sopt.assignment.global.config.KaKaoOAuthFeignConfig;
-import or.sopt.assignment.global.auth.kakao.dto.KaKaoOAuthTokenDTO;
-import or.sopt.assignment.global.auth.kakao.dto.OAuthCallbackResponse;
+import or.sopt.assignment.domain.user.controller.dto.KaKaoOAuthTokenDTO;
+import or.sopt.assignment.domain.user.controller.dto.OAuthCallbackResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
