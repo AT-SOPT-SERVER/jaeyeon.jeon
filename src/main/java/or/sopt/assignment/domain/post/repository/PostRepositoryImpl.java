@@ -3,6 +3,9 @@ package or.sopt.assignment.domain.post.repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import or.sopt.assignment.domain.post.entity.Post;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -56,6 +59,26 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 .distinct()
                 .fetch();
 
+    }
+
+
+    @Override
+    public Page<Post> findAllWithComments(Pageable pageable) {
+        List<Post> content = queryFactory
+                .selectFrom(post)
+                .leftJoin(post.comments, comment).fetchJoin()
+                .orderBy(post.createdAt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .distinct()
+                .fetch();
+
+        // 총 개수는 페치조인을 제외한 별도 카운트로 조회
+        long total = queryFactory
+                .selectFrom(post)
+                .fetchCount();
+
+        return PageableExecutionUtils.getPage(content, pageable, () -> total);
     }
 
 

@@ -65,7 +65,7 @@ public class PostService {
     public PostGetResponsePagingListDTO getAllPostsByPaging(int page) {
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by("createdAt").descending());
-        Page<Post> findPostsPage = postRepository.findAllByOrderByCreatedAtDesc(pageable);
+        Page<Post> findPostsPage = postRepository.findAllWithComments(pageable);
 
         Page<PostGetResponseDTO> dtoPage = findPostsPage.map(post -> {
             List<Comment> comments = commentRepository.findByPostIdWithUser(post.getId());
