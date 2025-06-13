@@ -1,6 +1,7 @@
 package or.sopt.assignment.domain.post.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import or.sopt.assignment.domain.comment.controller.dto.CommentGetResponseDTO;
 import or.sopt.assignment.domain.comment.entity.Comment;
 import or.sopt.assignment.domain.comment.repository.CommentRepository;
@@ -15,6 +16,9 @@ import or.sopt.assignment.global.api.exception.handler.PostHandler;
 import or.sopt.assignment.domain.user.exception.UserHandler;
 import or.sopt.assignment.global.infrastructure.LocalDateTime;
 import or.sopt.assignment.domain.user.repository.UserRepository;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +31,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class PostService {
 
     private final PostRepository postRepository;
@@ -37,6 +42,17 @@ public class PostService {
     private final CommentRepository commentRepository;
 
 
+    /**
+     * 해당 메서드가 호출될때마다 지정한 밸류의 캐시데이터를 모두 삭제합니다
+     * 캐싱의 Key가 확장될때마다 리스트로 관리합니다
+     *
+     * 하지만 이 방법은 너무 잦은 캐시 초기화를 유발 할 수 있을 것 같습니다
+     * 더 좋은 방법이 존재할듯
+     * */
+    @Caching(evict = {
+            @CacheEvict(value = "allPosts", allEntries = true),
+            @CacheEvict(value = "allPostsByPaging", allEntries = true)
+    })
     public Long createPost(PostCreateRequestDTO postRequestDTO) {
 
         User findUser = findUser(postRequestDTO);
@@ -62,6 +78,7 @@ public class PostService {
      * - 최신 게시글이 먼저 조회되도록 정렬 기준을 명확히 설정해주세요.
      * - 페이지 정보와 함께 응답을 구성해주세요. (총 페이지 수, 현재 페이지 등)
      * */
+    @Cacheable(value = "allPostsByPaging", key = "'allPosts_page_' + #page")
     public PostGetResponsePagingListDTO getAllPostsByPaging(int page) {
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by("createdAt").descending());
@@ -77,7 +94,14 @@ public class PostService {
     }
 
 
+    @Cacheable(value = "allPosts", key = "'allPosts'")
     public PostGetResponseListDTO getAllPosts(){
+
+        /**
+         * 캐시를 통해 데이터를 가져오면 해당 로그가 찍히지 않습니다
+         * 아마 쿼리도 안찍히기 떄문에 그걸로 확인 할 수도 있겠지만...
+         * */
+        log.info(">>> getAllPosts() 실제 실행됨 (캐시 미적중)");
         List<Post> findPosts = postRepository.findAllOrderedByCreatedAtDescV2();
 
 
