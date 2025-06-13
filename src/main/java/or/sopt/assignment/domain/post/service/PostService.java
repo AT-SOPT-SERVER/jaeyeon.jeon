@@ -97,6 +97,7 @@ public class PostService {
 
         /**
          * 캐시를 통해 데이터를 가져오면 해당 로그가 찍히지 않습니다
+         * 아마 쿼리도 안찍히기 떄문에 그걸로 확인 할 수도 있겠지만...
          * */
         log.info(">>> getAllPosts() 실제 실행됨 (캐시 미적중)");
         List<Post> findPosts = postRepository.findAllOrderedByCreatedAtDescV2();
