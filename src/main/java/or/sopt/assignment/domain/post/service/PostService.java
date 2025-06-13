@@ -50,7 +50,8 @@ public class PostService {
      * 더 좋은 방법이 존재할듯
      * */
     @Caching(evict = {
-            @CacheEvict(value = "allPosts", allEntries = true)
+            @CacheEvict(value = "allPosts", allEntries = true),
+            @CacheEvict(value = "allPostsByPaging", allEntries = true)
     })
     public Long createPost(PostCreateRequestDTO postRequestDTO) {
 
@@ -77,6 +78,7 @@ public class PostService {
      * - 최신 게시글이 먼저 조회되도록 정렬 기준을 명확히 설정해주세요.
      * - 페이지 정보와 함께 응답을 구성해주세요. (총 페이지 수, 현재 페이지 등)
      * */
+    @Cacheable(value = "allPostsByPaging", key = "'allPosts_page_' + #page")
     public PostGetResponsePagingListDTO getAllPostsByPaging(int page) {
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by("createdAt").descending());
@@ -92,7 +94,7 @@ public class PostService {
     }
 
 
-    @Cacheable(value = "allPosts", key = "'all'")
+    @Cacheable(value = "allPosts", key = "'allPosts'")
     public PostGetResponseListDTO getAllPosts(){
 
         /**
